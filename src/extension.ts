@@ -1,6 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -13,29 +13,29 @@ export function activate(context: vscode.ExtensionContext) {
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
   let disposable = vscode.commands.registerCommand(
-    "git-worktree.helloWorld",
+    'git-worktree.helloWorld',
     async () => {
       // The code you place here will be executed every time your command is executed
       // Display a message box to the user
-      vscode.window.showInformationMessage("Hello World from Git Worktrees!");
+      vscode.window.showInformationMessage('Hello World from Git Worktrees!');
 
-      const options = ["Create new branch", "explorer", "explorer"];
+      const options = ['Create new branch', 'explorer', 'explorer'];
 
       const branch = await vscode.window.showQuickPick(options, {
-        placeHolder: "Create new branch or select remote branch",
+        placeHolder: 'Create new branch or select remote branch',
       });
 
       if (branch === options[0]) {
         // Create new branch
         const branch = await vscode.window.showInputBox({
-          placeHolder: "Enter the new branch name",
+          placeHolder: 'Enter the new branch name',
         });
 
         vscode.window
           .showInformationMessage(
             `Should push branch: ${branch} to remote?`,
-            "Yes",
-            "No"
+            'Yes',
+            'No'
           )
           .then((answer) => console.log({ answer }));
 
