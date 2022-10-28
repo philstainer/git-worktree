@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 const exec = util.promisify(require('child_process').exec);
 
 export const getCurrentPath = () => vscode.workspace.rootPath;
+export const getWorkspaceFilePath = () => vscode.workspace.workspaceFile;
 
 export const executeCommand = async (command: string, options?: any) => {
   let execOptions = options;

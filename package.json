@@ -10,14 +10,15 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:git-worktree.helloWorld"
+    "onCommand:git-worktree.list"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "git-worktree.helloWorld",
-        "title": "Hello World"
+        "category": "Git Worktree",
+        "command": "git-worktree.list",
+        "title": "List"
       }
     ],
     "configuration": [
@@ -27,7 +28,7 @@
         "properties": {
           "gitWorktree.window.openNewWindow": {
             "type": "boolean",
-            "default": true,
+            "default": false,
             "description": "Open new vscode window when you switch or create a worktree"
           },
           "gitWorktree.push.automatically": {
@@ -47,13 +48,13 @@
         }
       },
       {
-        "id": "wt-new-vscode-window",
-        "title": "Open new Vscode window",
+        "id": "wt-add-settings",
+        "title": "Add Settings",
         "properties": {
-          "vsCodeGitWorktree.move.openNewVscodeWindow": {
+          "gitWorktree.add.includeRemote": {
             "type": "boolean",
-            "default": true,
-            "description": "Open new vscode window when you switch or create a worktree"
+            "default": false,
+            "description": "Should include remote branches when adding new worktree"
           }
         }
       }
