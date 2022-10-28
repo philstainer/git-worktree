@@ -10,13 +10,13 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:git-worktrees.helloWorld"
+    "onCommand:git-worktree.helloWorld"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "git-worktrees.helloWorld",
+        "command": "git-worktree.helloWorld",
         "title": "Hello World"
       }
     ],
