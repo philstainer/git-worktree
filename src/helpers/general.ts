@@ -1,7 +1,7 @@
-import * as util from "util";
-import * as vscode from "vscode";
+import * as util from 'util';
+import * as vscode from 'vscode';
 
-const exec = util.promisify(require("child_process").exec);
+const exec = util.promisify(require('child_process').exec);
 
 export const getCurrentPath = () => vscode.workspace.rootPath;
 
