@@ -1,13 +1,32 @@
 import { workspace } from 'vscode';
 
-export const shouldOpenNewVscodeWindow = workspace
-  .getConfiguration()
-  .get('gitWorktree.window.openNewWindow');
+const shouldOpenNewWindowOnCloneBare: boolean =
+  workspace
+    .getConfiguration()
+    .get('gitWorktree.worktree.openNewWindowOnCloneBare') ?? false;
 
-export const shouldPushBranchAutomatically = workspace
-  .getConfiguration()
-  .get('gitWorktree.push.openNewWindow');
+const shouldOpenNewWindowOnSwitch: boolean =
+  workspace
+    .getConfiguration()
+    .get('gitWorktree.worktree.openNewWindowOnSwitch') ?? false;
 
-export const shouldIncludeRemoteBranches = workspace
-  .getConfiguration()
-  .get('gitWorktree.add.includeRemote');
+const shouldOpenNewWindowOnCreate: boolean =
+  workspace
+    .getConfiguration()
+    .get('gitWorktree.worktree.openNewWindowOnCreate') ?? false;
+
+const shouldPushBranchAutomatically: boolean =
+  workspace.getConfiguration().get('gitWorktree.worktree.automatically') ??
+  false;
+
+const shouldIncludeRemoteBranches: string =
+  workspace.getConfiguration().get('gitWorktree.worktree.includeRemote') ??
+  'No';
+
+export default {
+  shouldOpenNewWindowOnCloneBare,
+  shouldOpenNewWindowOnSwitch,
+  shouldOpenNewWindowOnCreate,
+  shouldPushBranchAutomatically,
+  shouldIncludeRemoteBranches,
+};

@@ -1,10 +1,12 @@
 import { APP_NAME, OPEN_ISSUE_URL } from '#/config/constants';
-import { shouldOpenNewVscodeWindow } from '#/config/settings';
 import { commands, env, Uri, window } from 'vscode';
 
-export const openVscodeInstance = async (path: string) => {
+export const openVscodeInstance = async (
+  path: string,
+  forceNewWindow?: boolean
+) => {
   commands.executeCommand('vscode.openFolder', Uri.file(path), {
-    forceNewWindow: shouldOpenNewVscodeWindow,
+    forceNewWindow: forceNewWindow ?? false,
   });
 };
 

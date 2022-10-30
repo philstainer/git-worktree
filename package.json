@@ -38,12 +38,22 @@
         "id": "wt-general-settings",
         "title": "General Settings",
         "properties": {
-          "gitWorktree.window.openNewWindow": {
+          "gitWorktree.worktree.openNewWindowOnCloneBare": {
             "type": "boolean",
             "default": false,
-            "description": "Open new vscode window when you switch or create a worktree"
+            "description": "Open new vscode window when you clone git repository as bare"
           },
-          "gitWorktree.push.automatically": {
+          "gitWorktree.worktree.openNewWindowOnSwitch": {
+            "type": "boolean",
+            "default": false,
+            "description": "Open new vscode window when you switch worktrees"
+          },
+          "gitWorktree.worktree.openNewWindowOnCreate": {
+            "type": "boolean",
+            "default": false,
+            "description": "Open new vscode window when you create worktrees"
+          },
+          "gitWorktree.worktree.automatically": {
             "type": "string",
             "default": "No",
             "enum": [
@@ -63,7 +73,7 @@
         "id": "wt-add-settings",
         "title": "Add Settings",
         "properties": {
-          "gitWorktree.add.includeRemote": {
+          "gitWorktree.worktree.includeRemote": {
             "type": "boolean",
             "default": false,
             "description": "Should include remote branches when adding new worktree"
