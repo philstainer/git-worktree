@@ -33,12 +33,36 @@ export const throwIfNotRepo = async () => {
   throw new Error('This is not a git repository.');
 };
 
+export const validateBranchName = async (name: string) => {
+  try {
+    const command = `git check-ref-format --branch '${name}'`;
+    const { stdout } = await executeCommand(command);
+
+    return true;
+  } catch (e: any) {
+    return false;
+  }
+};
+
 export const getCurrentBranchName = async () => {
   try {
     const command = 'git rev-parse --abbrev-ref HEAD';
     const { stdout } = await executeCommand(command);
 
     return stdout.split('\n')[0];
+  } catch (e: any) {
+    throw Error(e);
+  }
+};
+
+export const branchExistsOnRemote = async (branch: string) => {
+  try {
+    const command = `git ls-remote origin ${branch}`;
+    const { stdout } = await executeCommand(command);
+
+    if (!stdout) return false;
+
+    return true;
   } catch (e: any) {
     throw Error(e);
   }
@@ -58,6 +82,24 @@ export const getRemoteBranches = async () => {
       .filter((line: string) => line.startsWith('  origin/'))
       .map((line: string) => line.substring('  origin/'.length))
       .map((branch: string) => branch.trim());
+  } catch (e: any) {
+    throw Error(e);
+  }
+};
+
+export const pushBranchToRemote = async (path: string) => {
+  try {
+    const command = 'git push origin';
+    await executeCommand(command, { cwd: path });
+  } catch (e: any) {
+    throw Error(e);
+  }
+};
+
+export const setBranchUpStream = async (branch: string, path: string) => {
+  try {
+    const command = `git branch --set-upstream-to origin/${branch}`;
+    await executeCommand(command, { cwd: path });
   } catch (e: any) {
     throw Error(e);
   }

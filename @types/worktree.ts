@@ -1,3 +1,5 @@
+import { noYesAskOptions, noYesWindowOptions } from '#/src/config/constants';
+
 export interface Worktree {
   path: string;
   hash: string;
@@ -5,6 +7,10 @@ export interface Worktree {
 }
 
 export interface SelectedWorktree {
-  label: string;
-  detail: string;
+  branch: string;
+  path: string;
 }
+
+export type INoYesOption = typeof noYesAskOptions[keyof typeof noYesAskOptions];
+export type INoYesWindowOption =
+  typeof noYesWindowOptions[keyof typeof noYesWindowOptions];

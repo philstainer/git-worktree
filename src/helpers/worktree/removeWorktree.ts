@@ -6,8 +6,7 @@ import { executeCommand } from '../general';
 const untrackedOrModifiedFilesError =
   'contains modified or untracked files, use --force to delete it';
 
-export const removeWorktree = async (worktree: SelectedWorktree) => {
-  const branch = worktree.label;
+export const removeWorktree = async ({ branch }: SelectedWorktree) => {
   const command = `git worktree remove ${branch}`;
 
   try {

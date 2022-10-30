@@ -12,7 +12,6 @@ export const list = async () => {
     const worktrees = await getWorktrees();
 
     const worktree = await selectWorktree(worktrees, false);
-
     if (!worktree) return;
 
     await moveIntoWorktree(worktree, settings.shouldOpenNewWindowOnSwitch);

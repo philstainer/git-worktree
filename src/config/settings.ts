@@ -1,4 +1,6 @@
+import { INoYesOption, INoYesWindowOption } from '#/@types/worktree';
 import { workspace } from 'vscode';
+import { noYesAskOptions, noYesWindowOptions } from './constants';
 
 const shouldOpenNewWindowOnCloneBare: boolean =
   workspace
@@ -15,18 +17,23 @@ const shouldOpenNewWindowOnCreate: boolean =
     .getConfiguration()
     .get('gitWorktree.worktree.openNewWindowOnCreate') ?? false;
 
-const shouldPushBranchAutomatically: boolean =
-  workspace.getConfiguration().get('gitWorktree.worktree.automatically') ??
-  false;
+const shouldOpenOnRename: INoYesWindowOption =
+  workspace.getConfiguration().get('gitWorktree.worktree.shouldOpenOnRename') ??
+  noYesWindowOptions.no;
 
-const shouldIncludeRemoteBranches: string =
+const shouldPushBranchAutomatically: INoYesOption =
+  workspace.getConfiguration().get('gitWorktree.worktree.automatically') ??
+  noYesAskOptions.no;
+
+const shouldIncludeRemoteBranches: boolean =
   workspace.getConfiguration().get('gitWorktree.worktree.includeRemote') ??
-  'No';
+  false;
 
 export default {
   shouldOpenNewWindowOnCloneBare,
   shouldOpenNewWindowOnSwitch,
   shouldOpenNewWindowOnCreate,
+  shouldOpenOnRename,
   shouldPushBranchAutomatically,
   shouldIncludeRemoteBranches,
 };

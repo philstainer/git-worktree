@@ -12,8 +12,12 @@ export const selectWorktree = async (
     detail: path,
   }));
 
-  return window.showQuickPick(items, {
+  const worktree = await window.showQuickPick(items, {
     matchOnDetail: true,
     canPickMany: canPickMany,
   });
+
+  if (!worktree) return null;
+
+  return { branch: worktree.label, path: worktree.detail };
 };

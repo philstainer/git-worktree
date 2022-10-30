@@ -12,7 +12,6 @@ export const remove = async () => {
     const worktrees = await getWorktrees();
 
     const worktree = await selectWorktree(worktrees);
-
     if (!worktree) return;
 
     await removeWorktree(worktree);

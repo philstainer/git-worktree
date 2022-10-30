@@ -7,12 +7,12 @@ export const moveIntoWorktree = async (
   worktree: SelectedWorktree,
   forceNewWindow?: boolean
 ) => {
-  const worktreePath = worktree.detail;
+  const path = worktree.path;
   const workspaceFilePath = getWorkspaceFilePath();
 
   if (!workspaceFilePath) {
-    openVscodeInstance(worktreePath, forceNewWindow);
-    return { type: 'folder', path: worktreePath };
+    openVscodeInstance(path, forceNewWindow);
+    return { type: 'folder', path: path };
   }
 
   window.showErrorMessage('Workspaces are not current supported 🥲');

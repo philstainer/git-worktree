@@ -11,6 +11,7 @@
   ],
   "activationEvents": [
     "onCommand:git-worktree.list",
+    "onCommand:git-worktree.rename",
     "onCommand:git-worktree.remove",
     "onCommand:git-worktree.removeMany"
   ],
@@ -21,6 +22,11 @@
         "category": "Git Worktree",
         "command": "git-worktree.list",
         "title": "List"
+      },
+      {
+        "category": "Git Worktree",
+        "command": "git-worktree.rename",
+        "title": "Rename"
       },
       {
         "category": "Git Worktree",
@@ -53,6 +59,22 @@
             "default": false,
             "description": "Open new vscode window when you create worktrees"
           },
+          "gitWorktree.worktree.shouldOpenOnRename": {
+            "type": "string",
+            "default": "No",
+            "enum": [
+              "No",
+              "Yes",
+              "New Window",
+              "Ask"
+            ],
+            "enumDescriptions": [
+              "Don't open new vscode window when you rename worktrees",
+              "Move into worktree when you rename",
+              "Open new vscode window when you rename worktrees",
+              "Ask when you rename worktrees"
+            ]
+          },
           "gitWorktree.worktree.automatically": {
             "type": "string",
             "default": "No",
@@ -79,6 +101,11 @@
             "description": "Should include remote branches when adding new worktree"
           }
         }
+      },
+      {
+        "id": "wt-remove-settings",
+        "title": "Remove Settings",
+        "properties": {}
       }
     ]
   },
