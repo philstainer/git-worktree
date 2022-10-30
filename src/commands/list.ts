@@ -1,23 +1,26 @@
 import { throwIfNotRepo } from '#/helpers/git';
-import { getWorktrees } from '#/src/helpers/worktree/list';
-import { moveIntoWorktree } from '../helpers/worktree/moveIntoWorktree';
-import { selectWorktree } from '../helpers/worktree/utils';
-
-const branches = ['Create new branch', 'explorer', 'explorer'];
+import { raiseIssue } from '../helpers/vscode';
+import { getWorktrees } from '../helpers/worktree/getWorktrees';
+import { moveIntoWorktree } from '../helpers/worktree/moveIntoWorkspace';
+import { selectWorktree } from '../helpers/worktree/selectWorktree';
 
 export const list = async () => {
-  await throwIfNotRepo();
+  try {
+    await throwIfNotRepo();
 
-  const worktrees = await getWorktrees();
+    const worktrees = await getWorktrees();
 
-  // const filtered = await getCurrentBranchName();
+    const worktree = await selectWorktree(worktrees);
 
-  const worktree = await selectWorktree(worktrees);
+    if (!worktree) return;
 
-  if (!worktree) return;
-
-  await moveIntoWorktree(worktree.detail);
+    await moveIntoWorktree(worktree.detail);
+  } catch (e: any) {
+    await raiseIssue(e?.message);
+  }
 };
+
+// const branches = ['Create new branch', 'explorer', 'explorer'];
 
 // const branch = await vscode.window.showQuickPick(branches, {
 //   placeHolder: 'Create new branch or select remote branch',
