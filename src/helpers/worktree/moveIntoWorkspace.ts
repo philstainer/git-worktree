@@ -1,8 +1,10 @@
+import { SelectedWorktree } from '#/@types/worktree';
 import { window } from 'vscode';
 import { getWorkspaceFilePath } from '../general';
 import { openVscodeInstance } from '../vscode';
 
-export const moveIntoWorktree = async (worktreePath: string) => {
+export const moveIntoWorktree = async (worktree: SelectedWorktree) => {
+  const worktreePath = worktree.detail;
   const workspaceFilePath = getWorkspaceFilePath();
 
   if (!workspaceFilePath) {

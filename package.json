@@ -10,7 +10,9 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:git-worktree.list"
+    "onCommand:git-worktree.list",
+    "onCommand:git-worktree.remove",
+    "onCommand:git-worktree.removeMany"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -19,6 +21,16 @@
         "category": "Git Worktree",
         "command": "git-worktree.list",
         "title": "List"
+      },
+      {
+        "category": "Git Worktree",
+        "command": "git-worktree.remove",
+        "title": "Remove"
+      },
+      {
+        "category": "Git Worktree",
+        "command": "git-worktree.removeMany",
+        "title": "Remove Many"
       }
     ],
     "configuration": [

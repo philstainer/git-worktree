@@ -10,11 +10,11 @@ export const list = async () => {
 
     const worktrees = await getWorktrees();
 
-    const worktree = await selectWorktree(worktrees);
+    const worktree = await selectWorktree(worktrees, false);
 
     if (!worktree) return;
 
-    await moveIntoWorktree(worktree.detail);
+    await moveIntoWorktree(worktree);
   } catch (e: any) {
     await raiseIssue(e?.message);
   }

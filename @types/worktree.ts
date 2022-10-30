@@ -3,3 +3,8 @@ export interface Worktree {
   hash: string;
   worktree: string;
 }
+
+export interface SelectedWorktree {
+  label: string;
+  detail: string;
+}
