@@ -1,28 +1,54 @@
-export const add = async () => {};
+import { window } from 'vscode';
+import { fetch, getRemoteBranches, throwIfNotRepository } from '../helpers/git';
+import { getUniqueWorktreeName, raiseIssue } from '../helpers/vscode';
+import { addNewWorktree } from '../helpers/worktree/addNewWorktree';
+import { addRemoteWorktree } from '../helpers/worktree/addRemoteWorktree';
+import { getWorktrees } from '../helpers/worktree/getWorktrees';
 
-// const branches = ['Create new branch', 'explorer', 'explorer'];
+const createWorktreeOption = 'Create new worktree';
 
-// const branch = await vscode.window.showQuickPick(branches, {
-//   placeHolder: 'Create new branch or select remote branch',
-// });
+export const add = async () => {
+  try {
+    await throwIfNotRepository();
 
-// if (branch === branches[0]) {
-//   // Create new branch
-//   const branch = await vscode.window.showInputBox({
-//     placeHolder: 'Enter the new branch name',
-//   });
+    await fetch();
 
-//   vscode.window
-//     .showInformationMessage(
-//       `Should push branch: ${branch} to remote?`,
-//       'Yes',
-//       'No'
-//     )
-//     .then((answer) => console.log({ answer }));
+    const [localWorktrees, remoteBranches] = await Promise.all([
+      getWorktrees(),
+      getRemoteBranches(),
+    ]);
 
-//   vscode.window.showInformationMessage(`Creating branch: ${branch}`);
+    // Filter out remote branches that already exist locally
+    const filteredBranches = remoteBranches.filter((worktree) => {
+      return !localWorktrees.find(
+        (lWorktree) => lWorktree.worktree === worktree
+      );
+    });
 
-//   return;
-// }
+    // Create or select remote branch
+    let branch = await window.showQuickPick(
+      [createWorktreeOption, ...filteredBranches],
+      {
+        placeHolder: 'Create new worktree or select remote branch',
+      }
+    );
+    if (!branch) return;
 
-// vscode.window.showInformationMessage(`branch: ${branch}`);
+    // Get name for new branch
+    if (branch === createWorktreeOption) {
+      const newBranch = await getUniqueWorktreeName({
+        placeHolder: 'Enter the new worktree name',
+        worktrees: localWorktrees,
+        remoteWorktrees: remoteBranches,
+      });
+
+      if (!newBranch) return;
+
+      await addNewWorktree(newBranch);
+    }
+
+    await addRemoteWorktree(branch);
+  } catch (e: any) {
+    await raiseIssue(e?.message);
+  }
+};

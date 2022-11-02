@@ -1,23 +1,43 @@
 import { Worktree } from '#/@types/worktree';
 import { window } from 'vscode';
 
-export const selectWorktree = async (
+type IWorktree = { branch: string; path: string };
+
+export const selectWorktree = async <T extends boolean = false>(
   worktrees: Worktree[],
-  canPickMany = false
-) => {
+  multiple?: T
+): Promise<
+  T extends true ? IWorktree[] | undefined : IWorktree | undefined
+> => {
   if (worktrees.length === 0) return;
+
+  const canPickMany = multiple ?? false;
 
   const items = worktrees.map(({ worktree, path }) => ({
     label: worktree,
     detail: path,
   }));
 
+  if (!canPickMany) {
+    const worktree = await window.showQuickPick(items, {
+      matchOnDetail: true,
+      canPickMany,
+    });
+
+    if (!worktree) return;
+
+    return { branch: worktree.label, path: worktree.detail } as any;
+  }
+
   const worktree = await window.showQuickPick(items, {
     matchOnDetail: true,
-    canPickMany: canPickMany,
+    canPickMany,
   });
 
-  if (!worktree) return null;
+  if (!worktree) return;
 
-  return { branch: worktree.label, path: worktree.detail };
+  return worktree.map((worktree) => ({
+    branch: worktree.label,
+    path: worktree.detail,
+  })) as any;
 };

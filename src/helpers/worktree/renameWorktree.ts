@@ -1,6 +1,5 @@
 import { SelectedWorktree } from '#/@types/worktree';
 import { executeCommand } from '../general';
-import { setBranchUpStream } from '../git';
 
 export const renameWorktree = async (
   { branch, path }: SelectedWorktree,
@@ -11,10 +10,8 @@ export const renameWorktree = async (
   const moveWorktree = `git worktree move ${path} ${newPath}`;
   await executeCommand(moveWorktree);
 
-  const renameBranch = `git branch -m ${newBranchName}`;
-  await executeCommand(renameBranch, { cwd: newPath });
-
-  await setBranchUpStream(newBranchName, newPath);
+  const renameBranch = `git -C ${newPath} branch -m ${newBranchName}`;
+  await executeCommand(renameBranch);
 
   return {
     branch: newBranchName,

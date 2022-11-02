@@ -1,10 +1,12 @@
 import * as vscode from 'vscode';
+import { add } from './commands/add';
 import { list } from './commands/list';
 import { remove } from './commands/remove';
 import { removeMany } from './commands/removeMany';
 import { rename } from './commands/rename';
 
 export function activate(context: vscode.ExtensionContext) {
+  let wtAdd = vscode.commands.registerCommand('git-worktree.add', add);
   let wtList = vscode.commands.registerCommand('git-worktree.list', list);
   let wtRename = vscode.commands.registerCommand('git-worktree.rename', rename);
   let wtRemove = vscode.commands.registerCommand('git-worktree.remove', remove);
@@ -13,6 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
     removeMany
   );
 
+  context.subscriptions.push(wtAdd);
   context.subscriptions.push(wtList);
   context.subscriptions.push(wtRename);
   context.subscriptions.push(wtRemove);

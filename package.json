@@ -10,6 +10,7 @@
     "Other"
   ],
   "activationEvents": [
+    "onCommand:git-worktree.add",
     "onCommand:git-worktree.list",
     "onCommand:git-worktree.rename",
     "onCommand:git-worktree.remove",
@@ -18,6 +19,11 @@
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
+      {
+        "category": "Git Worktree",
+        "command": "git-worktree.add",
+        "title": "Add"
+      },
       {
         "category": "Git Worktree",
         "command": "git-worktree.list",
@@ -95,6 +101,11 @@
         "id": "wt-add-settings",
         "title": "Add Settings",
         "properties": {
+          "gitWorktree.worktree.baseDirectory": {
+            "type": "string",
+            "default": "./",
+            "description": "Absolute or relative path to worktree base directory location"
+          },
           "gitWorktree.worktree.includeRemote": {
             "type": "boolean",
             "default": false,

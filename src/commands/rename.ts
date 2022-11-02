@@ -1,7 +1,12 @@
 import { SelectedWorktree } from '#/@types/worktree';
 import { noYesAskOptions, noYesWindowOptions } from '../config/constants';
 import settings from '../config/settings';
-import { pushBranchToRemote, throwIfNotRepo } from '../helpers/git';
+import {
+  fetch,
+  getRemoteOrigin,
+  pushNewBranchToRemote,
+  throwIfNotRepository,
+} from '../helpers/git';
 import {
   getUniqueWorktreeName,
   raiseIssue,
@@ -14,9 +19,11 @@ import { selectWorktree } from '../helpers/worktree/selectWorktree';
 
 export const rename = async () => {
   try {
-    await throwIfNotRepo();
+    await throwIfNotRepository();
 
     const worktrees = await getWorktrees();
+
+    await fetch();
 
     const worktree = await selectWorktree(worktrees);
     if (!worktree) return;
@@ -26,6 +33,7 @@ export const rename = async () => {
       placeHolder: `Rename branch: ${branch}`,
       prompt: `Rename worktree ${branch}`,
       value: branch,
+      worktrees: worktrees,
     });
 
     if (!newBranchName) return;
@@ -39,7 +47,10 @@ export const rename = async () => {
   }
 };
 
-const pushWorktree = async (worktree: SelectedWorktree) => {
+export const pushWorktree = async (worktree: SelectedWorktree) => {
+  const origin = await getRemoteOrigin();
+  if (!origin) return;
+
   if (settings.shouldPushBranchAutomatically === noYesAskOptions.no) return;
 
   if (settings.shouldPushBranchAutomatically === noYesAskOptions.ask) {
@@ -53,7 +64,7 @@ const pushWorktree = async (worktree: SelectedWorktree) => {
     if (answer !== noYesAskOptions.yes) return;
   }
 
-  await pushBranchToRemote(worktree.path);
+  await pushNewBranchToRemote(worktree.path);
 };
 
 const openWorktree = async (worktree: SelectedWorktree) => {

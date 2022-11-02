@@ -1,7 +1,12 @@
+import {
+  BARE_REPOSITORY,
+  BARE_REPOSITORY_REMOTE_ORIGIN_FETCH,
+} from '../config/constants';
 import { executeCommand } from './general';
 import { removeNewLine } from './string';
+import { getWorktrees } from './worktree/getWorktrees';
 
-export const isGitRepo = async () => {
+export const isGitRepository = async () => {
   try {
     const command = 'git rev-parse --is-inside-work-tree';
     await executeCommand(command);
@@ -12,7 +17,28 @@ export const isGitRepo = async () => {
   }
 };
 
-export const isBareRepo = async (path: string) => {
+export const getRemoteOrigin = async () => {
+  const command = 'git remote';
+
+  try {
+    const { stdout } = await executeCommand(command);
+    const origin = removeNewLine(stdout);
+
+    return origin === '' ? null : origin;
+  } catch (e: any) {
+    throw Error(e);
+  }
+};
+
+export const throwIfNotRepository = async () => {
+  const isRepo = await isGitRepository();
+
+  if (isRepo) return;
+
+  throw new Error('This is not a git repository.');
+};
+
+export const isBareRepository = async (path: string) => {
   try {
     const command = `git -C ${path} rev-parse --is-bare-repository`;
     const { stdout } = await executeCommand(command);
@@ -25,12 +51,44 @@ export const isBareRepo = async (path: string) => {
   }
 };
 
-export const throwIfNotRepo = async () => {
-  const isRepo = await isGitRepo();
+const hasBareRepository = async () => {
+  const worktrees = await getWorktrees(true);
+  const hasBareRepo = worktrees.find((wt) => wt.worktree === BARE_REPOSITORY);
+  return hasBareRepo;
+};
 
-  if (isRepo) return;
+const setUpBareRepositoryFetch = async () => {
+  const command = 'git config remote.origin.fetch';
+  const fetchOriginCommand = `git config remote.origin.fetch "${BARE_REPOSITORY_REMOTE_ORIGIN_FETCH}"`;
 
-  throw new Error('This is not a git repository.');
+  try {
+    const { stdout } = await executeCommand(command);
+
+    const remoteOriginFetch = removeNewLine(stdout);
+
+    if (remoteOriginFetch === BARE_REPOSITORY_REMOTE_ORIGIN_FETCH) return;
+
+    await executeCommand(fetchOriginCommand);
+    return;
+  } catch (e: any) {
+    try {
+      await executeCommand(fetchOriginCommand);
+    } catch (e: any) {
+      throw Error(e);
+    }
+  }
+};
+
+export const fetch = async () => {
+  const hasBareRepo = await hasBareRepository();
+  if (hasBareRepo) await setUpBareRepositoryFetch();
+
+  try {
+    const command = `git fetch --all --prune`;
+    await executeCommand(command);
+  } catch (e: any) {
+    throw Error(e);
+  }
 };
 
 export const validateBranchName = async (name: string) => {
@@ -55,7 +113,7 @@ export const getCurrentBranchName = async () => {
   }
 };
 
-export const branchExistsOnRemote = async (branch: string) => {
+export const checkIfBranchExistsOnRemote = async (branch: string) => {
   try {
     const command = `git ls-remote origin ${branch}`;
     const { stdout } = await executeCommand(command);
@@ -68,7 +126,7 @@ export const branchExistsOnRemote = async (branch: string) => {
   }
 };
 
-export const getRemoteBranches = async () => {
+export const getRemoteBranches = async (): Promise<string[]> => {
   try {
     const command = `git branch -r`;
     const { stdout } = await executeCommand(command);
@@ -78,7 +136,7 @@ export const getRemoteBranches = async () => {
     return stdout
       .split('\n')
       .filter((line: string) => line !== '')
-      .filter((line: string) => !line.includes('->')) // exclude "  origin/HEAD -> origin/master"
+      .filter((line: string) => !line.includes('->'))
       .filter((line: string) => line.startsWith('  origin/'))
       .map((line: string) => line.substring('  origin/'.length))
       .map((branch: string) => branch.trim());
@@ -87,19 +145,19 @@ export const getRemoteBranches = async () => {
   }
 };
 
-export const pushBranchToRemote = async (path: string) => {
+export const pushNewBranchToRemote = async (path: string) => {
   try {
-    const command = 'git push origin';
-    await executeCommand(command, { cwd: path });
+    const command = `git -C ${path} push -u origin`;
+    await executeCommand(command);
   } catch (e: any) {
     throw Error(e);
   }
 };
 
-export const setBranchUpStream = async (branch: string, path: string) => {
+export const removeBranch = async (branch: string) => {
   try {
-    const command = `git branch --set-upstream-to origin/${branch}`;
-    await executeCommand(command, { cwd: path });
+    const command = `git branch -D ${branch}`;
+    await executeCommand(command);
   } catch (e: any) {
     throw Error(e);
   }

@@ -25,6 +25,10 @@ const shouldPushBranchAutomatically: INoYesOption =
   workspace.getConfiguration().get('gitWorktree.worktree.automatically') ??
   noYesAskOptions.no;
 
+const baseDirectory: string =
+  workspace.getConfiguration().get('gitWorktree.worktree.baseDirectory') ??
+  './';
+
 const shouldIncludeRemoteBranches: boolean =
   workspace.getConfiguration().get('gitWorktree.worktree.includeRemote') ??
   false;
@@ -35,5 +39,6 @@ export default {
   shouldOpenNewWindowOnCreate,
   shouldOpenOnRename,
   shouldPushBranchAutomatically,
+  baseDirectory,
   shouldIncludeRemoteBranches,
 };

@@ -1,8 +1,7 @@
 import { Worktree } from '#/@types/worktree';
 import { APP_NAME, OPEN_ISSUE_URL } from '#/config/constants';
 import { commands, env, Uri, window } from 'vscode';
-import { validateBranchName } from './git';
-import { existsWorktree } from './worktree/existingWorktree';
+import { getRemoteBranches, validateBranchName } from './git';
 import { getWorktrees } from './worktree/getWorktrees';
 
 export const openVscodeInstance = async (
@@ -53,13 +52,18 @@ export const getUniqueWorktreeName = async ({
   prompt,
   value,
   worktrees,
+  remoteWorktrees,
 }: {
   placeHolder?: string;
   prompt?: string;
   value?: string;
   worktrees?: Worktree[];
+  remoteWorktrees?: string[];
 }) => {
-  const currentWorktrees = worktrees ? worktrees : await getWorktrees();
+  const lWorktrees = worktrees ? worktrees : await getWorktrees();
+  const rWorktrees = remoteWorktrees
+    ? remoteWorktrees
+    : await getRemoteBranches();
 
   return window.showInputBox({
     placeHolder,
@@ -68,11 +72,14 @@ export const getUniqueWorktreeName = async ({
     validateInput: async (value) => {
       const text = value?.trim();
 
-      const existingWorktree = await existsWorktree(text, currentWorktrees);
-      if (existingWorktree) return `Worktree ${text} already exists`;
+      if (lWorktrees.find(({ worktree }) => worktree === text))
+        return `Worktree ${text} already exists`;
 
       const validateBranch = await validateBranchName(text);
       if (!validateBranch) return `Invalid name for a branch '${text}'`;
+
+      if (rWorktrees.find((worktree) => worktree === text))
+        return `Worktree ${text} already exists on remote`;
 
       return null;
     },

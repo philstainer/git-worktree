@@ -11,7 +11,7 @@ export const removeWorktree = async ({ branch }: SelectedWorktree) => {
 
   try {
     await executeCommand(command);
-    await window.showInformationMessage(
+    window.showInformationMessage(
       `Worktree named '${branch}' was removed successfully`
     );
   } catch (e: any) {
