@@ -57,9 +57,10 @@ const hasBareRepository = async () => {
   return hasBareRepo;
 };
 
-const setUpBareRepositoryFetch = async () => {
-  const command = 'git config remote.origin.fetch';
-  const fetchOriginCommand = `git config remote.origin.fetch "${BARE_REPOSITORY_REMOTE_ORIGIN_FETCH}"`;
+export const setUpBareRepositoryFetch = async (path?: string) => {
+  const pathCommand = path ? `-C ${path}` : '';
+  const command = `git ${pathCommand} config remote.origin.fetch`;
+  const fetchOriginCommand = `git ${pathCommand} config remote.origin.fetch "${BARE_REPOSITORY_REMOTE_ORIGIN_FETCH}"`;
 
   try {
     const { stdout } = await executeCommand(command);
@@ -79,12 +80,13 @@ const setUpBareRepositoryFetch = async () => {
   }
 };
 
-export const fetch = async () => {
+export const fetch = async (path?: string) => {
+  const pathCommand = path ? `-C ${path}` : '';
   const hasBareRepo = await hasBareRepository();
-  if (hasBareRepo) await setUpBareRepositoryFetch();
+  if (hasBareRepo) await setUpBareRepositoryFetch(path);
 
   try {
-    const command = `git fetch --all --prune`;
+    const command = `git ${pathCommand} fetch --all --prune`;
     await executeCommand(command);
   } catch (e: any) {
     throw Error(e);
@@ -157,6 +159,15 @@ export const pushNewBranchToRemote = async (path: string) => {
 export const removeBranch = async (branch: string) => {
   try {
     const command = `git branch -D ${branch}`;
+    await executeCommand(command);
+  } catch (e: any) {
+    throw Error(e);
+  }
+};
+
+export const cloneBare = async (path: string, url: string) => {
+  try {
+    const command = `git -C ${path} clone --bare "${url}" .bare`;
     await executeCommand(command);
   } catch (e: any) {
     throw Error(e);
