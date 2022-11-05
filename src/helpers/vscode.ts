@@ -1,6 +1,11 @@
-import { Worktree } from '#/@types/worktree';
-import { APP_NAME, OPEN_ISSUE_URL } from '#/config/constants';
+import { ILoggingOptionValue, Worktree } from '#/@types/worktree';
+import {
+  APP_NAME,
+  loggingOptionValue,
+  OPEN_ISSUE_URL,
+} from '#/config/constants';
 import { commands, env, Uri, window } from 'vscode';
+import settings from '../config/settings';
 import { getRemoteBranches, validateBranchName } from './git';
 import { getWorktrees } from './worktree/getWorktrees';
 
@@ -36,18 +41,33 @@ export const raiseIssue = async (errorMessage?: string) => {
   await openBrowser(url);
 };
 
+const isEnableToLog = (level: ILoggingOptionValue, wantedLevel: number) => {
+  let isAbleToLog = false;
+
+  if (level <= wantedLevel) isAbleToLog = true;
+
+  return isAbleToLog;
+};
+
 export const showUserMessage = async (
   type: 'Error' | 'Warn' | 'Info',
   message: string,
   ...other: any[]
 ) => {
-  if (type === 'Error')
-    return window.showErrorMessage(`${APP_NAME}: ${message}`, ...other);
+  const formattedMessage = `${APP_NAME}: ${message}`;
 
-  if (type === 'Warn')
-    return window.showWarningMessage(`${APP_NAME}: ${message}`, ...other);
+  if (type === 'Error') {
+    if (!isEnableToLog(settings.loggingLevel, loggingOptionValue.error)) return;
+    return window.showErrorMessage(formattedMessage, ...other);
+  }
 
-  return window.showInformationMessage(`${APP_NAME}: ${message}`, ...other);
+  if (type === 'Warn') {
+    if (!isEnableToLog(settings.loggingLevel, loggingOptionValue.warn)) return;
+    return window.showWarningMessage(formattedMessage, ...other);
+  }
+
+  if (!isEnableToLog(settings.loggingLevel, loggingOptionValue.info)) return;
+  return window.showInformationMessage(formattedMessage, ...other);
 };
 
 export const getUniqueWorktreeName = async ({

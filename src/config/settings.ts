@@ -1,7 +1,9 @@
 import { INoYesOption, INoYesWindowOption } from '#/@types/worktree';
 import { workspace } from 'vscode';
+import { getCurrentLoggingLevel } from '../helpers/general';
 import { noYesAskOptions, noYesWindowOptions } from './constants';
 
+// General
 const shouldOpenNewWindowOnCloneBare: boolean =
   workspace
     .getConfiguration()
@@ -25,10 +27,14 @@ const shouldPushBranchAutomatically: INoYesOption =
   workspace.getConfiguration().get('gitWorktree.worktree.automatically') ??
   noYesAskOptions.no;
 
+const loggingLevel = getCurrentLoggingLevel();
+
+// Add
 const baseDirectory: string =
   workspace.getConfiguration().get('gitWorktree.worktree.baseDirectory') ??
   './';
 
+// Remove
 const shouldIncludeRemoteBranches: boolean =
   workspace.getConfiguration().get('gitWorktree.worktree.includeRemote') ??
   false;
@@ -39,6 +45,7 @@ export default {
   shouldOpenNewWindowOnCreate,
   shouldOpenOnRename,
   shouldPushBranchAutomatically,
+  loggingLevel,
   baseDirectory,
   shouldIncludeRemoteBranches,
 };

@@ -106,6 +106,20 @@
               "Automatically push created branches to remote",
               "Ask to push to remote when creating branches"
             ]
+          },
+          "gitWorktree.worktree.loggingLevel": {
+            "type": "string",
+            "default": "Info",
+            "enum": [
+              "Error",
+              "Warn",
+              "Info"
+            ],
+            "enumDescriptions": [
+              "Error logging level",
+              "Warn logging level",
+              "Info logging level"
+            ]
           }
         }
       },

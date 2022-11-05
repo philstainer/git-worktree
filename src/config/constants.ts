@@ -18,3 +18,15 @@ export const noYesWindowOptions = {
   ...noYesAskOptions,
   newWindow: 'New Window',
 } as const;
+
+export const loggingOptions = {
+  error: 'Error',
+  warn: 'Warn',
+  info: 'Info',
+} as const;
+
+export const loggingOptionValue = {
+  error: 10,
+  warn: 5,
+  info: 0,
+} as const;
