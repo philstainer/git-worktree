@@ -10,14 +10,14 @@ import {
   isExistingDirectory,
 } from '../helpers/file';
 import { updateGlobalProjects } from '../helpers/general';
-import { cloneBare, fetch } from '../helpers/git';
+import { cloneBare, setUpBareRepositoryFetch } from '../helpers/git';
 import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
 
 export const clone = async () => {
   try {
     const cloneUrl = await window.showInputBox({
-      placeHolder: '',
-      prompt: '',
+      placeHolder: 'Git repository url',
+      prompt: 'Please enter a valid url to clone',
     });
     if (!cloneUrl)
       return showUserMessage('Warn', 'Aborted as no url was given');
@@ -38,8 +38,8 @@ export const clone = async () => {
     const repoName = parsedUrl.pathname.split('/')[2].replace('.git', '');
 
     const newRepoName = await window.showInputBox({
-      placeHolder: '',
-      prompt: '',
+      placeHolder: 'Repository name',
+      prompt: 'Enter new name for repository',
       value: repoName,
       validateInput: async (value) => {
         const text = value?.trim();
@@ -69,11 +69,12 @@ export const clone = async () => {
         `gitdir: ${settings.cloneBaseDirectory}`
       );
 
-    await fetch(newPath);
+    await setUpBareRepositoryFetch(newPath);
 
     const worktree = { worktree: newRepoName, path: newPath };
 
     await updateGlobalProjects(worktree);
+
     await shouldMoveIntoWorktree(worktree, settings.openOnClone);
   } catch (e: any) {
     await raiseIssue(e?.message);

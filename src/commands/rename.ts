@@ -33,8 +33,8 @@ export const rename = async () => {
 
     const branch = worktree.worktree;
     const newBranchName = await getUniqueWorktreeName({
-      placeHolder: `Rename branch: ${branch}`,
-      prompt: `Rename worktree ${branch}`,
+      placeHolder: 'Enter new name for worktree',
+      prompt: `Renaming worktree ${branch}`,
       value: branch,
       worktrees: worktrees,
     });

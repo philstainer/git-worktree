@@ -59,10 +59,10 @@ const hasBareRepository = async () => {
 
 export const setUpBareRepositoryFetch = async (path?: string) => {
   const pathCommand = path ? `-C ${path}` : '';
-  const command = `git ${pathCommand} config remote.origin.fetch`;
   const fetchOriginCommand = `git ${pathCommand} config remote.origin.fetch "${BARE_REPOSITORY_REMOTE_ORIGIN_FETCH}"`;
 
   try {
+    const command = `git ${pathCommand} config remote.origin.fetch`;
     const { stdout } = await executeCommand(command);
 
     const remoteOriginFetch = removeNewLine(stdout);
