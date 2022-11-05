@@ -1,6 +1,10 @@
 import { window } from 'vscode';
 import { fetch, getRemoteBranches, throwIfNotRepository } from '../helpers/git';
-import { getUniqueWorktreeName, raiseIssue } from '../helpers/vscode';
+import {
+  getUniqueWorktreeName,
+  raiseIssue,
+  showUserMessage,
+} from '../helpers/vscode';
 import { addNewWorktree } from '../helpers/worktree/addNewWorktree';
 import { addRemoteWorktree } from '../helpers/worktree/addRemoteWorktree';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
@@ -32,7 +36,8 @@ export const add = async () => {
         placeHolder: 'Create new worktree or select remote branch',
       }
     );
-    if (!branch) return;
+    if (!branch)
+      return showUserMessage('Warn', 'Aborted as no worktree was selected');
 
     // Get name for new branch
     if (branch === createWorktreeOption) {
@@ -42,7 +47,11 @@ export const add = async () => {
         remoteWorktrees: remoteBranches,
       });
 
-      if (!newBranch) return;
+      if (!newBranch)
+        return showUserMessage(
+          'Warn',
+          "Aborted as worktree wasn't given a name"
+        );
 
       await addNewWorktree(newBranch);
     }

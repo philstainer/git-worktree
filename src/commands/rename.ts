@@ -22,11 +22,14 @@ export const rename = async () => {
     await throwIfNotRepository();
 
     const worktrees = await getWorktrees();
+    if (!worktrees.length)
+      return showUserMessage('Info', "Couldn't find any worktrees");
 
     await fetch();
 
     const worktree = await selectWorktree(worktrees);
-    if (!worktree) return;
+    if (!worktree)
+      return showUserMessage('Warn', 'Aborted as no worktree was selected');
 
     const branch = worktree.branch;
     const newBranchName = await getUniqueWorktreeName({
@@ -35,8 +38,8 @@ export const rename = async () => {
       value: branch,
       worktrees: worktrees,
     });
-
-    if (!newBranchName) return;
+    if (!newBranchName)
+      return showUserMessage('Warn', "Aborted as branch wasn't given a name");
 
     const renamedWorktree = await renameWorktree(worktree, newBranchName);
 

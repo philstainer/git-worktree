@@ -1,5 +1,5 @@
 import { window } from 'vscode';
-import { raiseIssue } from '../helpers/vscode';
+import { raiseIssue, showUserMessage } from '../helpers/vscode';
 
 import parseUrl from 'parse-url';
 import { resolve } from 'path';
@@ -16,20 +16,22 @@ export const clone = async () => {
       placeHolder: '',
       prompt: '',
     });
-    if (!cloneUrl) return;
+    if (!cloneUrl)
+      return showUserMessage('Warn', 'Aborted as no url was given');
 
     const parsedUrl = parseUrl(cloneUrl);
-    if (!parsedUrl) return;
+    if (!parsedUrl)
+      return showUserMessage('Error', 'Failed to clone as url is malformed');
 
     const selectFolder = await window.showOpenDialog({
       canSelectFolders: true,
       canSelectFiles: false,
       canSelectMany: false,
     });
-    if (!selectFolder?.length) return;
+    if (!selectFolder?.length)
+      return showUserMessage('Warn', 'Aborted as no folder was selected');
 
     const path = selectFolder[0].path;
-
     const repoName = parsedUrl.pathname.split('/')[2].replace('.git', '');
 
     const newRepoName = await window.showInputBox({
@@ -49,7 +51,8 @@ export const clone = async () => {
         return null;
       },
     });
-    if (!newRepoName) return;
+    if (!newRepoName)
+      return showUserMessage('Warn', "Aborted as repo wasn't given a name");
 
     const newPath = resolve(path, newRepoName);
 

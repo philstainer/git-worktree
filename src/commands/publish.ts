@@ -15,7 +15,7 @@ export const publish = async () => {
 
     const hasRemote = await getRemoteOrigin();
     if (!hasRemote)
-      return showUserMessage('Warn', `This repository has no remote setup`);
+      return showUserMessage('Warn', 'This repository has no remote setup');
 
     await fetch();
 
@@ -28,11 +28,11 @@ export const publish = async () => {
       (lwt) => !remoteBranches.find((rwt) => rwt === lwt.worktree)
     );
     if (!filteredBranches.length)
-      return showUserMessage('Info', `All worktrees already exist on remote`);
+      return showUserMessage('Info', 'All worktrees already exist on remote');
 
     const worktree = await selectWorktree(filteredBranches);
     if (!worktree)
-      return showUserMessage('Warn', `Aborted as no worktree was selected`);
+      return showUserMessage('Warn', 'Aborted as no worktree was selected');
 
     await pushNewBranchToRemote(worktree.path);
 

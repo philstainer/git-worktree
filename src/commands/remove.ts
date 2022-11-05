@@ -1,5 +1,5 @@
 import { throwIfNotRepository } from '#/helpers/git';
-import { raiseIssue } from '../helpers/vscode';
+import { raiseIssue, showUserMessage } from '../helpers/vscode';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
 import { pruneWorktrees } from '../helpers/worktree/pruneWorktrees';
 import { removeWorktree } from '../helpers/worktree/removeWorktree';
@@ -10,15 +10,18 @@ export const remove = async () => {
     await throwIfNotRepository();
 
     const worktrees = await getWorktrees();
+    if (!worktrees.length)
+      return showUserMessage('Info', "Couldn't find any worktrees");
 
     const worktree = await selectWorktree(worktrees);
-    if (!worktree) return;
+    if (!worktree)
+      return showUserMessage('Warn', 'Aborted as no worktree was selected');
 
     await removeWorktree(worktree);
 
-    await pruneWorktrees();
-
     // await removeBranch(worktree.branch);
+
+    await pruneWorktrees();
   } catch (e: any) {
     await raiseIssue(e?.message);
   }
