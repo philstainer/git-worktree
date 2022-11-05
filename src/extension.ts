@@ -2,15 +2,17 @@ import * as vscode from 'vscode';
 import { add } from './commands/add';
 import { clone } from './commands/clone';
 import { list } from './commands/list';
+import { projects } from './commands/projects';
 import { publish } from './commands/publish';
 import { remove } from './commands/remove';
 import { rename } from './commands/rename';
 
+export let globalState: vscode.ExtensionContext['globalState'] | null = null;
+
 export function activate(context: vscode.ExtensionContext) {
-  let wtClone = vscode.commands.registerCommand(
-    'git-worktree.clone-bare',
-    clone
-  );
+  globalState = context.globalState;
+
+  let wtClone = vscode.commands.registerCommand('git-worktree.clone', clone);
   let wtAdd = vscode.commands.registerCommand('git-worktree.add', add);
   let wtList = vscode.commands.registerCommand('git-worktree.list', list);
   let wtRename = vscode.commands.registerCommand('git-worktree.rename', rename);
@@ -19,6 +21,10 @@ export function activate(context: vscode.ExtensionContext) {
     'git-worktree.publish',
     publish
   );
+  let wtProjects = vscode.commands.registerCommand(
+    'git-worktree.projects',
+    projects
+  );
 
   context.subscriptions.push(wtClone);
   context.subscriptions.push(wtAdd);
@@ -26,6 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(wtRename);
   context.subscriptions.push(wtRemove);
   context.subscriptions.push(wtPublish);
+  context.subscriptions.push(wtProjects);
 }
 
 export function deactivate() {}

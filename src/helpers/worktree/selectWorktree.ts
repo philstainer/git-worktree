@@ -1,10 +1,8 @@
-import { Worktree } from '#/@types/worktree';
+import type { IWorktree } from '#/@types/worktree';
 import { window } from 'vscode';
 
-type IWorktree = { branch: string; path: string };
-
 export const selectWorktree = async <T extends boolean = false>(
-  worktrees: Worktree[],
+  worktrees: IWorktree[],
   multiple?: T
 ): Promise<
   T extends true ? IWorktree[] | undefined : IWorktree | undefined
@@ -26,7 +24,7 @@ export const selectWorktree = async <T extends boolean = false>(
 
     if (!worktree) return;
 
-    return { branch: worktree.label, path: worktree.detail } as any;
+    return { worktree: worktree.label, path: worktree.detail } as any;
   }
 
   const worktree = await window.showQuickPick(items, {

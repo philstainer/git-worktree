@@ -29,7 +29,7 @@ export const remove = async () => {
     );
 
     if (settings.shouldRemoveBranch)
-      await removeBranch(selectedWorktrees.map((wt) => wt.branch));
+      await removeBranch(selectedWorktrees.map((wt) => wt.worktree));
 
     await pruneWorktrees();
   } catch (e: any) {

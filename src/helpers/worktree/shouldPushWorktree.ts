@@ -1,10 +1,10 @@
-import { INoYesWindowOption, SelectedWorktree } from '#/@types/worktree';
+import { INoYesWindowOption, IWorktree } from '#/@types/worktree';
 import { noYesWindowOptions } from '#/src/config/constants';
 import { getRemoteOrigin, pushNewBranchToRemote } from '../git';
 import { showUserMessage } from '../vscode';
 
 export const shouldPushWorktree = async (
-  worktree: SelectedWorktree,
+  worktree: IWorktree,
   option: INoYesWindowOption
 ) => {
   const hasRemote = await getRemoteOrigin();
@@ -16,7 +16,7 @@ export const shouldPushWorktree = async (
   if (option === noYesWindowOptions.ask) {
     const answer = await showUserMessage(
       'Info',
-      `Do you move into '${worktree.branch}' worktree?`,
+      `Do you move into '${worktree.worktree}' worktree?`,
       noYesWindowOptions.yes,
       noYesWindowOptions.newWindow,
       noYesWindowOptions.no

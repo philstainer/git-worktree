@@ -38,7 +38,7 @@ export const publish = async () => {
 
     showUserMessage(
       'Info',
-      `Successfully pushed '${worktree.branch}' to origin`
+      `Successfully pushed '${worktree.worktree}' to origin`
     );
   } catch (e: any) {
     await raiseIssue(e?.message);

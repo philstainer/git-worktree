@@ -1,9 +1,9 @@
-import { SelectedWorktree } from '#/@types/worktree';
+import { IWorktree } from '#/@types/worktree';
 import { getWorkspaceFilePath } from '../general';
 import { openVscodeInstance, showUserMessage } from '../vscode';
 
 export const moveIntoWorktree = async (
-  worktree: SelectedWorktree,
+  worktree: IWorktree,
   forceNewWindow?: boolean
 ) => {
   const path = worktree.path;

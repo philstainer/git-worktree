@@ -9,6 +9,7 @@ import {
   createFile,
   isExistingDirectory,
 } from '../helpers/file';
+import { updateGlobalProjects } from '../helpers/general';
 import { cloneBare, fetch } from '../helpers/git';
 import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
 
@@ -70,8 +71,10 @@ export const clone = async () => {
 
     await fetch(newPath);
 
-    const worktree = { branch: newRepoName, path: newPath };
-    await shouldMoveIntoWorktree(worktree, settings.shouldOpenOnClone);
+    const worktree = { worktree: newRepoName, path: newPath };
+
+    await updateGlobalProjects(worktree);
+    await shouldMoveIntoWorktree(worktree, settings.openOnClone);
   } catch (e: any) {
     await raiseIssue(e?.message);
   }

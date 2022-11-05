@@ -1,4 +1,4 @@
-import { SelectedWorktree } from '#/@types/worktree';
+import { IWorktree } from '#/@types/worktree';
 import { noYesAskOptions } from '../config/constants';
 import settings from '../config/settings';
 import {
@@ -31,7 +31,7 @@ export const rename = async () => {
     if (!worktree)
       return showUserMessage('Warn', 'Aborted as no worktree was selected');
 
-    const branch = worktree.branch;
+    const branch = worktree.worktree;
     const newBranchName = await getUniqueWorktreeName({
       placeHolder: `Rename branch: ${branch}`,
       prompt: `Rename worktree ${branch}`,
@@ -44,13 +44,13 @@ export const rename = async () => {
     const renamedWorktree = await renameWorktree(worktree, newBranchName);
 
     await pushWorktree(renamedWorktree);
-    await shouldMoveIntoWorktree(renamedWorktree, settings.shouldOpenOnRename);
+    await shouldMoveIntoWorktree(renamedWorktree, settings.openOnRename);
   } catch (e: any) {
     await raiseIssue(e?.message);
   }
 };
 
-export const pushWorktree = async (worktree: SelectedWorktree) => {
+export const pushWorktree = async (worktree: IWorktree) => {
   const origin = await getRemoteOrigin();
   if (!origin) return;
 
@@ -59,7 +59,7 @@ export const pushWorktree = async (worktree: SelectedWorktree) => {
   if (settings.shouldPushBranchAutomatically === noYesAskOptions.ask) {
     const answer = await showUserMessage(
       'Info',
-      `Do you want to push to '${worktree.branch}' to remote?`,
+      `Do you want to push to '${worktree.worktree}' to remote?`,
       noYesAskOptions.yes,
       'No'
     );

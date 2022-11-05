@@ -16,9 +16,15 @@ const cloneBaseDirectory = getVSCodeSetting(
   './.bare'
 );
 
-const shouldOpenOnClone = getVSCodeSetting(
-  'gitWorktree.worktree.shouldOpenOnClone',
-  noYesWindowOptions.no
+const openOnClone = getVSCodeSetting(
+  'gitWorktree.worktree.openOnClone',
+  noYesWindowOptions.yes
+);
+
+// Project
+const shouldOpenOnProject = getVSCodeSetting(
+  'gitWorktree.worktree.openOnProject',
+  noYesWindowOptions.yes
 );
 
 // List
@@ -49,8 +55,8 @@ const shouldOpenOnAdd = getVSCodeSetting(
 );
 
 // Rename
-const shouldOpenOnRename = getVSCodeSetting(
-  'gitWorktree.worktree.shouldOpenOnRename',
+const openOnRename = getVSCodeSetting(
+  'gitWorktree.worktree.openOnRename',
   noYesWindowOptions.no
 );
 
@@ -71,7 +77,10 @@ export default {
 
   // Clone
   cloneBaseDirectory,
-  shouldOpenOnClone,
+  openOnClone,
+
+  // Project
+  shouldOpenOnProject,
 
   // List
   shouldOpenOnSwitch,
@@ -83,7 +92,7 @@ export default {
   shouldOpenOnAdd,
 
   //Rename
-  shouldOpenOnRename,
+  openOnRename,
 
   // Remove
   shouldRemoveBranch,

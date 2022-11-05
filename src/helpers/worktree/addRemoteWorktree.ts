@@ -9,7 +9,7 @@ export const addRemoteWorktree = async (remoteBranch: string) => {
 
   const newWorktreePath = await calculateNewWorktreePath(remoteBranch);
 
-  const newWorktree = { branch: remoteBranch, path: newWorktreePath };
+  const newWorktree = { worktree: remoteBranch, path: newWorktreePath };
 
   try {
     const worktreeAddCommand = `git worktree add --track -B ${remoteBranch} ${newWorktreePath} origin/${remoteBranch}`;

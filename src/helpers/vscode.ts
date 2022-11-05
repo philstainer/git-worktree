@@ -1,4 +1,4 @@
-import { ILoggingOptionValue, Worktree } from '#/@types/worktree';
+import type { ILoggingOptionValue, IWorktreeWithHash } from '#/@types/worktree';
 import {
   APP_NAME,
   loggingOptionValue,
@@ -80,7 +80,7 @@ export const getUniqueWorktreeName = async ({
   placeHolder?: string;
   prompt?: string;
   value?: string;
-  worktrees?: Worktree[];
+  worktrees?: IWorktreeWithHash[];
   remoteWorktrees?: string[];
 }) => {
   const lWorktrees = worktrees ? worktrees : await getWorktrees();

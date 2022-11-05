@@ -1,11 +1,24 @@
-import { ILoggingOption, ILoggingOptionValue } from '#/@types/worktree';
+import type {
+  ILoggingOption,
+  ILoggingOptionValue,
+  IWorktree,
+} from '#/@types/worktree';
+import { basename } from 'path';
 import * as util from 'util';
 import * as vscode from 'vscode';
 import { loggingOptions, loggingOptionValue } from '../config/constants';
+import { globalState } from '../extension';
+import { isExistingDirectory } from './file';
 
 const exec = util.promisify(require('child_process').exec);
 
 export const getCurrentPath = () => vscode.workspace.rootPath;
+export const getCurrentDirectory = () => {
+  const currentPath = getCurrentPath();
+  if (!currentPath) return null;
+
+  return basename(currentPath);
+};
 export const getWorkspaceFilePath = () => vscode.workspace.workspaceFile;
 
 export const executeCommand = async (command: string, options?: any) => {
@@ -41,4 +54,34 @@ export const getCurrentLoggingLevel = () => {
     loggingLevel = loggingOptionValue.warn;
 
   return loggingLevel;
+};
+
+export const getGlobalProjects = async () => {
+  const projects: IWorktree[] = globalState?.get('projects') ?? [];
+
+  const checkedProjects = await Promise.all(
+    projects.map(async (wt) => ({
+      ...wt,
+      exists: await isExistingDirectory(wt.path),
+    }))
+  );
+
+  const cleanProjects = checkedProjects
+    .filter((wt) => wt.exists)
+    .map(({ exists, ...wt }) => wt);
+
+  return cleanProjects;
+};
+
+export const updateGlobalProjects = async (worktree: IWorktree) => {
+  const projects = await getGlobalProjects();
+
+  const newWorktrees: IWorktree[] = [
+    ...projects,
+    { path: worktree.path, worktree: worktree.worktree },
+  ];
+
+  globalState?.update('projects', newWorktrees);
+
+  return newWorktrees;
 };

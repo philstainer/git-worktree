@@ -10,20 +10,21 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:git-worktree.clone-bare",
+    "onCommand:git-worktree.clone",
     "onCommand:git-worktree.add",
     "onCommand:git-worktree.list",
     "onCommand:git-worktree.rename",
     "onCommand:git-worktree.remove",
-    "onCommand:git-worktree.publish"
+    "onCommand:git-worktree.publish",
+    "onCommand:git-worktree.projects"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
         "category": "Git Worktree",
-        "command": "git-worktree.clone-bare",
-        "title": "Clone Bare"
+        "command": "git-worktree.clone",
+        "title": "Clone"
       },
       {
         "category": "Git Worktree",
@@ -49,6 +50,11 @@
         "category": "Git Worktree",
         "command": "git-worktree.publish",
         "title": "Publish Worktree"
+      },
+      {
+        "category": "Git Worktree",
+        "command": "git-worktree.projects",
+        "title": "Cloned Projects"
       }
     ],
     "configuration": [
@@ -59,6 +65,7 @@
           "gitWorktree.worktree.automatically": {
             "type": "string",
             "default": "No",
+            "description": "Should push worktree automatically to remote",
             "enum": [
               "No",
               "Yes",
@@ -73,6 +80,7 @@
           "gitWorktree.worktree.loggingLevel": {
             "type": "string",
             "default": "Info",
+            "description": "Select logging level",
             "enum": [
               "Error",
               "Warn",
@@ -95,9 +103,10 @@
             "default": "./.bare",
             "description": "Base directory to clone git files into"
           },
-          "gitWorktree.worktree.shouldOpenOnClone": {
+          "gitWorktree.worktree.openOnClone": {
             "type": "string",
-            "default": "No",
+            "default": "Yes",
+            "description": "Should open vscode when cloning a project",
             "enum": [
               "No",
               "Yes",
@@ -114,12 +123,36 @@
         }
       },
       {
+        "id": "wt-projects-settings",
+        "title": "Project Settings",
+        "properties": {
+          "gitWorktree.worktree.openOnProject": {
+            "type": "string",
+            "default": "Yes",
+            "description": "Should open vscode when selecting a project",
+            "enum": [
+              "No",
+              "Yes",
+              "New Window",
+              "Ask"
+            ],
+            "enumDescriptions": [
+              "Don't open new vscode window when you select a project",
+              "Move into worktree when you select a project",
+              "Open new vscode window when you select a project",
+              "Ask when you select a project"
+            ]
+          }
+        }
+      },
+      {
         "id": "wt-list-settings",
         "title": "List Settings",
         "properties": {
           "gitWorktree.worktree.openOnSwitch": {
             "type": "string",
             "default": "Yes",
+            "description": "Should open vscode when selecting a worktree",
             "enum": [
               "No",
               "Yes",
@@ -157,6 +190,7 @@
           "gitWorktree.worktree.openOnAdd": {
             "type": "string",
             "default": "Yes",
+            "description": "Should open vscode when adding a worktree",
             "enum": [
               "No",
               "Yes",
@@ -176,9 +210,10 @@
         "id": "wt-rename-settings",
         "title": "Rename Settings",
         "properties": {
-          "gitWorktree.worktree.shouldOpenOnRename": {
+          "gitWorktree.worktree.openOnRename": {
             "type": "string",
             "default": "No",
+            "description": "Should open vscode when renaming a worktree",
             "enum": [
               "No",
               "Yes",

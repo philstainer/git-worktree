@@ -1,10 +1,10 @@
-import { INoYesWindowOption, SelectedWorktree } from '#/@types/worktree';
+import { INoYesWindowOption, IWorktree } from '#/@types/worktree';
 import { noYesWindowOptions } from '#/src/config/constants';
 import { showUserMessage } from '../vscode';
 import { moveIntoWorktree } from './moveIntoWorkspace';
 
 export const shouldMoveIntoWorktree = async (
-  worktree: SelectedWorktree,
+  worktree: IWorktree,
   option: INoYesWindowOption
 ) => {
   if (option === noYesWindowOptions.no) return;
@@ -12,7 +12,7 @@ export const shouldMoveIntoWorktree = async (
   if (option === noYesWindowOptions.ask) {
     const answer = await showUserMessage(
       'Info',
-      `Do you move into '${worktree.branch}' worktree?`,
+      `Do you move into '${worktree.worktree}' worktree?`,
       noYesWindowOptions.yes,
       noYesWindowOptions.newWindow,
       noYesWindowOptions.no
