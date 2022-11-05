@@ -1,4 +1,5 @@
-import { throwIfNotRepository } from '#/helpers/git';
+import { removeBranch, throwIfNotRepository } from '#/helpers/git';
+import settings from '../config/settings';
 import { raiseIssue, showUserMessage } from '../helpers/vscode';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
 import { pruneWorktrees } from '../helpers/worktree/pruneWorktrees';
@@ -21,7 +22,8 @@ export const removeMany = async () => {
       selectedWorktrees.map((worktree) => removeWorktree(worktree))
     );
 
-    // await Promise.all(selectedWorktrees.map((wt) => removeBranch(wt.branch)));
+    if (settings.shouldRemoveBranch)
+      await removeBranch(selectedWorktrees.map((wt) => wt.branch));
 
     await pruneWorktrees();
   } catch (e: any) {

@@ -136,13 +136,24 @@
             "type": "boolean",
             "default": false,
             "description": "Should include remote branches when adding new worktree"
+          },
+          "gitWorktree.worktree.pruneBranches": {
+            "type": "boolean",
+            "default": false,
+            "description": "Should prune branches when creating worktrees"
           }
         }
       },
       {
         "id": "wt-remove-settings",
         "title": "Remove Settings",
-        "properties": {}
+        "properties": {
+          "gitWorktree.worktree.removeBranch": {
+            "type": "boolean",
+            "default": false,
+            "description": "Should remove branch when removing a worktree"
+          }
+        }
       }
     ]
   },

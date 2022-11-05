@@ -34,9 +34,17 @@ const baseDirectory: string =
   workspace.getConfiguration().get('gitWorktree.worktree.baseDirectory') ??
   './';
 
-// Remove
 const shouldIncludeRemoteBranches: boolean =
   workspace.getConfiguration().get('gitWorktree.worktree.includeRemote') ??
+  false;
+
+const shouldPruneBranches: boolean =
+  workspace.getConfiguration().get('gitWorktree.worktree.pruneBranches') ??
+  false;
+
+// Remove
+const shouldRemoveBranch: boolean =
+  workspace.getConfiguration().get('gitWorktree.worktree.removeBranch') ??
   false;
 
 export default {
@@ -46,6 +54,12 @@ export default {
   shouldOpenOnRename,
   shouldPushBranchAutomatically,
   loggingLevel,
+
+  // Add
   baseDirectory,
   shouldIncludeRemoteBranches,
+  shouldPruneBranches,
+
+  // Remove
+  shouldRemoveBranch,
 };

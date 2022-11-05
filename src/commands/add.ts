@@ -1,5 +1,11 @@
 import { window } from 'vscode';
-import { fetch, getRemoteBranches, throwIfNotRepository } from '../helpers/git';
+import settings from '../config/settings';
+import {
+  fetch,
+  getRemoteBranches,
+  removeLocalBranchesThatDoNotExistOnRemoteRepository,
+  throwIfNotRepository,
+} from '../helpers/git';
 import {
   getUniqueWorktreeName,
   raiseIssue,
@@ -16,6 +22,9 @@ export const add = async () => {
     await throwIfNotRepository();
 
     await fetch();
+
+    if (settings.shouldPruneBranches)
+      await removeLocalBranchesThatDoNotExistOnRemoteRepository();
 
     const [localWorktrees, remoteBranches] = await Promise.all([
       getWorktrees(),

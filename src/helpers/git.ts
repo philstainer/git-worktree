@@ -156,9 +156,13 @@ export const pushNewBranchToRemote = async (path: string) => {
   }
 };
 
-export const removeBranch = async (branch: string) => {
+export const removeBranch = async (branchOrBranches: string | string[]) => {
+  const joinedBranches = Array.isArray(branchOrBranches)
+    ? branchOrBranches.join(' ')
+    : branchOrBranches;
+
   try {
-    const command = `git branch -D ${branch}`;
+    const command = `git branch -D ${joinedBranches}`;
     await executeCommand(command);
   } catch (e: any) {
     throw Error(e);
@@ -169,6 +173,28 @@ export const cloneBare = async (path: string, url: string) => {
   try {
     const command = `git -C ${path} clone --bare "${url}" .bare`;
     await executeCommand(command);
+  } catch (e: any) {
+    throw Error(e);
+  }
+};
+
+export const removeLocalBranchesThatDoNotExistOnRemoteRepository = async () => {
+  try {
+    const command = `git branch -vv`;
+    const { stdout } = await executeCommand(command);
+
+    if (!stdout) return;
+
+    const localBranchesThatDoNotExistOnRemoteRepository = stdout
+      .split('\n')
+      .filter((line: string) => line.includes(': gone]'))
+      .filter((line: string) => !line.match(/^[\*\+]/))
+      .map((line: string) => line.trim())
+      .map((line: string) => line.split(' ')[0]);
+
+    if (localBranchesThatDoNotExistOnRemoteRepository.length === 0) return;
+
+    await removeBranch(localBranchesThatDoNotExistOnRemoteRepository);
   } catch (e: any) {
     throw Error(e);
   }
