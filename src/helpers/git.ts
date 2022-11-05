@@ -26,7 +26,7 @@ export const getRemoteOrigin = async () => {
 
     return origin === '' ? null : origin;
   } catch (e: any) {
-    throw Error(e);
+    return null;
   }
 };
 

@@ -37,12 +37,15 @@ export const raiseIssue = async (errorMessage?: string) => {
 };
 
 export const showUserMessage = async (
-  type: 'Error' | 'Info',
+  type: 'Error' | 'Warn' | 'Info',
   message: string,
   ...other: any[]
 ) => {
   if (type === 'Error')
     return window.showErrorMessage(`${APP_NAME}: ${message}`, ...other);
+
+  if (type === 'Warn')
+    return window.showWarningMessage(`${APP_NAME}: ${message}`, ...other);
 
   return window.showInformationMessage(`${APP_NAME}: ${message}`, ...other);
 };

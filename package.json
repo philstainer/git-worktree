@@ -15,7 +15,8 @@
     "onCommand:git-worktree.list",
     "onCommand:git-worktree.rename",
     "onCommand:git-worktree.remove",
-    "onCommand:git-worktree.removeMany"
+    "onCommand:git-worktree.removeMany",
+    "onCommand:git-worktree.publish"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -49,6 +50,11 @@
         "category": "Git Worktree",
         "command": "git-worktree.removeMany",
         "title": "Remove Many"
+      },
+      {
+        "category": "Git Worktree",
+        "command": "git-worktree.publish",
+        "title": "Publish Worktree"
       }
     ],
     "configuration": [
