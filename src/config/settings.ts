@@ -3,21 +3,6 @@ import { getVSCodeSetting } from '../helpers/vscode';
 import { noYesAskOptions, noYesWindowOptions } from './constants';
 
 // General
-const shouldOpenNewWindowOnSwitch = getVSCodeSetting(
-  'gitWorktree.worktree.openNewWindowOnSwitch',
-  false
-);
-
-const shouldOpenNewWindowOnCreate = getVSCodeSetting(
-  'gitWorktree.worktree.openNewWindowOnCreate',
-  false
-);
-
-const shouldOpenOnRename = getVSCodeSetting(
-  'gitWorktree.worktree.shouldOpenOnRename',
-  noYesWindowOptions.no
-);
-
 const shouldPushBranchAutomatically = getVSCodeSetting(
   'gitWorktree.worktree.automatically',
   noYesAskOptions.no
@@ -25,6 +10,7 @@ const shouldPushBranchAutomatically = getVSCodeSetting(
 
 const loggingLevel = getCurrentLoggingLevel();
 
+// Clone
 const cloneBaseDirectory = getVSCodeSetting(
   'gitWorktree.worktree.cloneBaseDirectory',
   './.bare'
@@ -33,6 +19,12 @@ const cloneBaseDirectory = getVSCodeSetting(
 const shouldOpenOnClone = getVSCodeSetting(
   'gitWorktree.worktree.shouldOpenOnClone',
   noYesWindowOptions.no
+);
+
+// List
+const shouldOpenOnSwitch = getVSCodeSetting(
+  'gitWorktree.worktree.openOnSwitch',
+  noYesWindowOptions.yes
 );
 
 // Add
@@ -56,6 +48,12 @@ const shouldOpenOnAdd = getVSCodeSetting(
   noYesWindowOptions.yes
 );
 
+// Rename
+const shouldOpenOnRename = getVSCodeSetting(
+  'gitWorktree.worktree.shouldOpenOnRename',
+  noYesWindowOptions.no
+);
+
 // Remove
 const shouldRemoveBranch = getVSCodeSetting(
   'gitWorktree.worktree.removeBranch',
@@ -68,19 +66,24 @@ const shouldRemoveMultiple = getVSCodeSetting(
 );
 
 export default {
-  shouldOpenNewWindowOnSwitch,
-  shouldOpenNewWindowOnCreate,
-  shouldOpenOnRename,
   shouldPushBranchAutomatically,
   loggingLevel,
+
+  // Clone
   cloneBaseDirectory,
   shouldOpenOnClone,
+
+  // List
+  shouldOpenOnSwitch,
 
   // Add
   baseDirectory,
   shouldIncludeRemoteBranches,
   shouldPruneBranches,
   shouldOpenOnAdd,
+
+  //Rename
+  shouldOpenOnRename,
 
   // Remove
   shouldRemoveBranch,

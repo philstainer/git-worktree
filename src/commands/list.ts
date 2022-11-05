@@ -2,8 +2,8 @@ import { throwIfNotRepository } from '#/helpers/git';
 import settings from '../config/settings';
 import { raiseIssue, showUserMessage } from '../helpers/vscode';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
-import { moveIntoWorktree } from '../helpers/worktree/moveIntoWorkspace';
 import { selectWorktree } from '../helpers/worktree/selectWorktree';
+import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
 
 export const list = async () => {
   try {
@@ -17,7 +17,7 @@ export const list = async () => {
     if (!worktree)
       return showUserMessage('Warn', 'Aborted as no worktree was selected');
 
-    await moveIntoWorktree(worktree, settings.shouldOpenNewWindowOnSwitch);
+    await shouldMoveIntoWorktree(worktree, settings.shouldOpenOnSwitch);
   } catch (e: any) {
     await raiseIssue(e?.message);
   }

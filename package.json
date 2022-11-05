@@ -56,37 +56,6 @@
         "id": "wt-general-settings",
         "title": "General Settings",
         "properties": {
-          "gitWorktree.worktree.openNewWindowOnCloneBare": {
-            "type": "boolean",
-            "default": false,
-            "description": "Open new vscode window when you clone git repository as bare"
-          },
-          "gitWorktree.worktree.openNewWindowOnSwitch": {
-            "type": "boolean",
-            "default": false,
-            "description": "Open new vscode window when you switch worktrees"
-          },
-          "gitWorktree.worktree.openNewWindowOnCreate": {
-            "type": "boolean",
-            "default": false,
-            "description": "Open new vscode window when you create worktrees"
-          },
-          "gitWorktree.worktree.shouldOpenOnRename": {
-            "type": "string",
-            "default": "No",
-            "enum": [
-              "No",
-              "Yes",
-              "New Window",
-              "Ask"
-            ],
-            "enumDescriptions": [
-              "Don't open new vscode window when you rename worktree",
-              "Move into worktree when you rename",
-              "Open new vscode window when you rename worktree",
-              "Ask when you rename worktree"
-            ]
-          },
           "gitWorktree.worktree.automatically": {
             "type": "string",
             "default": "No",
@@ -114,7 +83,13 @@
               "Warn logging level",
               "Info logging level"
             ]
-          },
+          }
+        }
+      },
+      {
+        "id": "wt-clone-settings",
+        "title": "Clone Settings",
+        "properties": {
           "gitWorktree.worktree.cloneBaseDirectory": {
             "type": "string",
             "default": "./.bare",
@@ -134,6 +109,28 @@
               "Move into worktree when you clone",
               "Open new vscode window when you clone worktree",
               "Ask when you clone worktree"
+            ]
+          }
+        }
+      },
+      {
+        "id": "wt-list-settings",
+        "title": "List Settings",
+        "properties": {
+          "gitWorktree.worktree.openOnSwitch": {
+            "type": "string",
+            "default": "Yes",
+            "enum": [
+              "No",
+              "Yes",
+              "New Window",
+              "Ask"
+            ],
+            "enumDescriptions": [
+              "Don't open new vscode window when you list worktree",
+              "Move into worktree when you list",
+              "Open new vscode window when you list worktree",
+              "Ask when you list worktree"
             ]
           }
         }
@@ -171,6 +168,28 @@
               "Move into worktree when you add",
               "Open new vscode window when you add worktree",
               "Ask when you add worktree"
+            ]
+          }
+        }
+      },
+      {
+        "id": "wt-rename-settings",
+        "title": "Rename Settings",
+        "properties": {
+          "gitWorktree.worktree.shouldOpenOnRename": {
+            "type": "string",
+            "default": "No",
+            "enum": [
+              "No",
+              "Yes",
+              "New Window",
+              "Ask"
+            ],
+            "enumDescriptions": [
+              "Don't open new vscode window when you rename worktree",
+              "Move into worktree when you rename",
+              "Open new vscode window when you rename worktree",
+              "Ask when you rename worktree"
             ]
           }
         }
