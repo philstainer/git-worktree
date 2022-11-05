@@ -14,6 +14,8 @@ import {
 import { addNewWorktree } from '../helpers/worktree/addNewWorktree';
 import { addRemoteWorktree } from '../helpers/worktree/addRemoteWorktree';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
+import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
+import { pushWorktree } from './rename';
 
 const createWorktreeOption = 'Create new worktree';
 
@@ -48,6 +50,8 @@ export const add = async () => {
     if (!branch)
       return showUserMessage('Warn', 'Aborted as no worktree was selected');
 
+    let worktree = null;
+
     // Get name for new branch
     if (branch === createWorktreeOption) {
       const newBranch = await getUniqueWorktreeName({
@@ -62,10 +66,14 @@ export const add = async () => {
           "Aborted as worktree wasn't given a name"
         );
 
-      await addNewWorktree(newBranch);
+      worktree = await addNewWorktree(newBranch);
+
+      await pushWorktree(worktree);
+    } else {
+      worktree = await addRemoteWorktree(branch);
     }
 
-    await addRemoteWorktree(branch);
+    await shouldMoveIntoWorktree(worktree, settings.shouldOpenOnAdd);
   } catch (e: any) {
     await raiseIssue(e?.message);
   }

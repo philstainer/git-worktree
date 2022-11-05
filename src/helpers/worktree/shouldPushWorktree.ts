@@ -1,12 +1,16 @@
 import { INoYesWindowOption, SelectedWorktree } from '#/@types/worktree';
 import { noYesWindowOptions } from '#/src/config/constants';
+import { getRemoteOrigin, pushNewBranchToRemote } from '../git';
 import { showUserMessage } from '../vscode';
-import { moveIntoWorktree } from './moveIntoWorkspace';
 
-export const shouldMoveIntoWorktree = async (
+export const shouldPushWorktree = async (
   worktree: SelectedWorktree,
   option: INoYesWindowOption
 ) => {
+  const hasRemote = await getRemoteOrigin();
+  if (!hasRemote)
+    return showUserMessage('Warn', 'This repository has no remote setup');
+
   if (option === noYesWindowOptions.no) return;
 
   if (option === noYesWindowOptions.ask) {
@@ -21,14 +25,8 @@ export const shouldMoveIntoWorktree = async (
     if (!answer) return;
     if (answer === noYesWindowOptions.no) return;
 
-    return moveIntoWorktree(
-      worktree,
-      answer === noYesWindowOptions.yes ? false : true
-    );
+    return pushNewBranchToRemote(worktree.path);
   }
 
-  return moveIntoWorktree(
-    worktree,
-    option === noYesWindowOptions.yes ? false : true
-  );
+  pushNewBranchToRemote(worktree.path);
 };

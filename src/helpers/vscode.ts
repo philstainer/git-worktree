@@ -4,7 +4,7 @@ import {
   loggingOptionValue,
   OPEN_ISSUE_URL,
 } from '#/config/constants';
-import { commands, env, Uri, window } from 'vscode';
+import { commands, env, Uri, window, workspace } from 'vscode';
 import settings from '../config/settings';
 import { getRemoteBranches, validateBranchName } from './git';
 import { getWorktrees } from './worktree/getWorktrees';
@@ -108,3 +108,6 @@ export const getUniqueWorktreeName = async ({
     },
   });
 };
+
+export const getVSCodeSetting = <A, T>(name: string, defaultValue: T): T =>
+  workspace.getConfiguration().get(name) ?? defaultValue;

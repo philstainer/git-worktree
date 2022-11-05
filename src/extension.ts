@@ -4,7 +4,6 @@ import { clone } from './commands/clone';
 import { list } from './commands/list';
 import { publish } from './commands/publish';
 import { remove } from './commands/remove';
-import { removeMany } from './commands/removeMany';
 import { rename } from './commands/rename';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -16,10 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
   let wtList = vscode.commands.registerCommand('git-worktree.list', list);
   let wtRename = vscode.commands.registerCommand('git-worktree.rename', rename);
   let wtRemove = vscode.commands.registerCommand('git-worktree.remove', remove);
-  let wtRemoveMany = vscode.commands.registerCommand(
-    'git-worktree.removeMany',
-    removeMany
-  );
   let wtPublish = vscode.commands.registerCommand(
     'git-worktree.publish',
     publish
@@ -30,7 +25,6 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(wtList);
   context.subscriptions.push(wtRename);
   context.subscriptions.push(wtRemove);
-  context.subscriptions.push(wtRemoveMany);
   context.subscriptions.push(wtPublish);
 }
 

@@ -1,7 +1,6 @@
 import { executeCommand } from '../general';
 import { checkIfBranchExistsOnRemote } from '../git';
 import { calculateNewWorktreePath } from './calculateNewWorktreePath';
-import { moveIntoWorktree } from './moveIntoWorkspace';
 
 export const addRemoteWorktree = async (remoteBranch: string) => {
   const isExistingBranch = await checkIfBranchExistsOnRemote(remoteBranch);
@@ -19,7 +18,7 @@ export const addRemoteWorktree = async (remoteBranch: string) => {
     const pullCommand = `git -C ${newWorktreePath} pull`;
     await executeCommand(pullCommand);
 
-    await moveIntoWorktree(newWorktree);
+    return newWorktree;
   } catch (e: any) {
     throw Error(e);
   }

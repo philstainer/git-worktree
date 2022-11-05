@@ -14,13 +14,22 @@ export const remove = async () => {
     if (!worktrees.length)
       return showUserMessage('Info', "Couldn't find any worktrees");
 
-    const worktree = await selectWorktree(worktrees);
-    if (!worktree)
+    let selectedWorktrees = await selectWorktree(
+      worktrees,
+      settings.shouldRemoveMultiple
+    );
+    if (!selectedWorktrees)
       return showUserMessage('Warn', 'Aborted as no worktree was selected');
 
-    await removeWorktree(worktree);
+    if (!Array.isArray(selectedWorktrees))
+      selectedWorktrees = [selectedWorktrees];
 
-    if (settings.shouldRemoveBranch) await removeBranch(worktree.branch);
+    await Promise.all(
+      selectedWorktrees.map((worktree) => removeWorktree(worktree))
+    );
+
+    if (settings.shouldRemoveBranch)
+      await removeBranch(selectedWorktrees.map((wt) => wt.branch));
 
     await pruneWorktrees();
   } catch (e: any) {

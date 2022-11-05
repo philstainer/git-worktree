@@ -15,7 +15,6 @@
     "onCommand:git-worktree.list",
     "onCommand:git-worktree.rename",
     "onCommand:git-worktree.remove",
-    "onCommand:git-worktree.removeMany",
     "onCommand:git-worktree.publish"
   ],
   "main": "./dist/extension.js",
@@ -48,11 +47,6 @@
       },
       {
         "category": "Git Worktree",
-        "command": "git-worktree.removeMany",
-        "title": "Remove Many"
-      },
-      {
-        "category": "Git Worktree",
         "command": "git-worktree.publish",
         "title": "Publish Worktree"
       }
@@ -76,22 +70,6 @@
             "type": "boolean",
             "default": false,
             "description": "Open new vscode window when you create worktrees"
-          },
-          "gitWorktree.worktree.shouldOpenOnClone": {
-            "type": "string",
-            "default": "No",
-            "enum": [
-              "No",
-              "Yes",
-              "New Window",
-              "Ask"
-            ],
-            "enumDescriptions": [
-              "Don't open new vscode window when you clone worktree",
-              "Move into worktree when you clone",
-              "Open new vscode window when you clone worktree",
-              "Ask when you clone worktree"
-            ]
           },
           "gitWorktree.worktree.shouldOpenOnRename": {
             "type": "string",
@@ -141,6 +119,22 @@
             "type": "string",
             "default": "./.bare",
             "description": "Base directory to clone git files into"
+          },
+          "gitWorktree.worktree.shouldOpenOnClone": {
+            "type": "string",
+            "default": "No",
+            "enum": [
+              "No",
+              "Yes",
+              "New Window",
+              "Ask"
+            ],
+            "enumDescriptions": [
+              "Don't open new vscode window when you clone worktree",
+              "Move into worktree when you clone",
+              "Open new vscode window when you clone worktree",
+              "Ask when you clone worktree"
+            ]
           }
         }
       },
@@ -162,6 +156,22 @@
             "type": "boolean",
             "default": false,
             "description": "Should prune branches when creating worktrees"
+          },
+          "gitWorktree.worktree.openOnAdd": {
+            "type": "string",
+            "default": "Yes",
+            "enum": [
+              "No",
+              "Yes",
+              "New Window",
+              "Ask"
+            ],
+            "enumDescriptions": [
+              "Don't open new vscode window when you add worktree",
+              "Move into worktree when you add",
+              "Open new vscode window when you add worktree",
+              "Ask when you add worktree"
+            ]
           }
         }
       },
@@ -173,6 +183,11 @@
             "type": "boolean",
             "default": false,
             "description": "Should remove branch when removing a worktree"
+          },
+          "gitWorktree.worktree.removeMultiple": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable the multiple selection off worktrees"
           }
         }
       }
