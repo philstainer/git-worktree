@@ -5,21 +5,21 @@ import type {
 } from '#/@types/worktree';
 import { basename } from 'path';
 import * as util from 'util';
-import * as vscode from 'vscode';
+import { workspace } from 'vscode';
 import { loggingOptions, loggingOptionValue } from '../config/constants';
 import { globalState } from '../extension';
 import { isExistingDirectory } from './file';
 
 const exec = util.promisify(require('child_process').exec);
 
-export const getCurrentPath = () => vscode.workspace.rootPath;
+export const getCurrentPath = () => workspace.rootPath;
 export const getCurrentDirectory = () => {
   const currentPath = getCurrentPath();
   if (!currentPath) return null;
 
   return basename(currentPath);
 };
-export const getWorkspaceFilePath = () => vscode.workspace.workspaceFile;
+export const getWorkspaceFilePath = () => workspace.workspaceFile;
 
 export const executeCommand = async (command: string, options?: any) => {
   let execOptions = options;
@@ -42,9 +42,8 @@ export const executeCommand = async (command: string, options?: any) => {
 
 export const getCurrentLoggingLevel = () => {
   const currentLoggingLevel: ILoggingOption =
-    vscode.workspace
-      .getConfiguration()
-      .get('gitWorktree.worktree.loggingLevel') ?? loggingOptions.info;
+    workspace.getConfiguration().get('gitWorktree.worktree.loggingLevel') ??
+    loggingOptions.info;
 
   let loggingLevel: ILoggingOptionValue = loggingOptionValue.info;
 
