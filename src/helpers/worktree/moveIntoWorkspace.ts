@@ -1,7 +1,6 @@
 import { SelectedWorktree } from '#/@types/worktree';
-import { window } from 'vscode';
 import { getWorkspaceFilePath } from '../general';
-import { openVscodeInstance } from '../vscode';
+import { openVscodeInstance, showUserMessage } from '../vscode';
 
 export const moveIntoWorktree = async (
   worktree: SelectedWorktree,
@@ -15,5 +14,5 @@ export const moveIntoWorktree = async (
     return { type: 'folder', path: path };
   }
 
-  window.showErrorMessage('Workspaces are not current supported 🥲');
+  showUserMessage('Error', 'Workspaces are not current supported 🥲');
 };

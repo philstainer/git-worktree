@@ -1,7 +1,7 @@
 import { SelectedWorktree } from '#/@types/worktree';
 import { APP_NAME } from '#/src/config/constants';
-import { window } from 'vscode';
 import { executeCommand } from '../general';
+import { showUserMessage } from '../vscode';
 
 const untrackedOrModifiedFilesError =
   'contains modified or untracked files, use --force to delete it';
@@ -11,7 +11,8 @@ export const removeWorktree = async ({ branch, path }: SelectedWorktree) => {
 
   try {
     await executeCommand(command);
-    window.showInformationMessage(
+    showUserMessage(
+      'Info',
       `Worktree named '${branch}' was removed successfully`
     );
   } catch (e: any) {
@@ -21,7 +22,8 @@ export const removeWorktree = async ({ branch, path }: SelectedWorktree) => {
       throw new Error(e);
 
     const buttonName = 'Force Delete';
-    const answer = await window.showInformationMessage(
+    const answer = await showUserMessage(
+      'Info',
       `${APP_NAME}: ${errorMessage}`,
       buttonName
     );
@@ -31,7 +33,8 @@ export const removeWorktree = async ({ branch, path }: SelectedWorktree) => {
     const forceCommand = `git worktree remove -f ${branch}`;
     try {
       await executeCommand(forceCommand);
-      await window.showInformationMessage(
+      await showUserMessage(
+        'Info',
         `Worktree named '${branch}' was removed successfully`
       );
     } catch (err: any) {
