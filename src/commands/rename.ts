@@ -1,5 +1,5 @@
 import { SelectedWorktree } from '#/@types/worktree';
-import { noYesAskOptions, noYesWindowOptions } from '../config/constants';
+import { noYesAskOptions } from '../config/constants';
 import settings from '../config/settings';
 import {
   fetch,
@@ -13,9 +13,9 @@ import {
   showUserMessage,
 } from '../helpers/vscode';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
-import { moveIntoWorktree } from '../helpers/worktree/moveIntoWorkspace';
 import { renameWorktree } from '../helpers/worktree/renameWorktree';
 import { selectWorktree } from '../helpers/worktree/selectWorktree';
+import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
 
 export const rename = async () => {
   try {
@@ -44,7 +44,7 @@ export const rename = async () => {
     const renamedWorktree = await renameWorktree(worktree, newBranchName);
 
     await pushWorktree(renamedWorktree);
-    await openWorktree(renamedWorktree);
+    await shouldMoveIntoWorktree(renamedWorktree, settings.shouldOpenOnRename);
   } catch (e: any) {
     await raiseIssue(e?.message);
   }
@@ -68,31 +68,4 @@ export const pushWorktree = async (worktree: SelectedWorktree) => {
   }
 
   await pushNewBranchToRemote(worktree.path);
-};
-
-const openWorktree = async (worktree: SelectedWorktree) => {
-  if (settings.shouldOpenOnRename === noYesWindowOptions.no) return;
-
-  if (settings.shouldOpenOnRename === noYesWindowOptions.ask) {
-    const answer = await showUserMessage(
-      'Info',
-      `Do you move into '${worktree.branch}' worktree?`,
-      noYesWindowOptions.yes,
-      noYesWindowOptions.newWindow,
-      noYesWindowOptions.no
-    );
-
-    if (!answer) return;
-    if (answer === noYesWindowOptions.no) return;
-
-    return await moveIntoWorktree(
-      worktree,
-      answer === noYesWindowOptions.yes ? false : true
-    );
-  }
-
-  await moveIntoWorktree(
-    worktree,
-    settings.shouldOpenOnRename === noYesWindowOptions.yes ? false : true
-  );
 };

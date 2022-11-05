@@ -77,6 +77,22 @@
             "default": false,
             "description": "Open new vscode window when you create worktrees"
           },
+          "gitWorktree.worktree.shouldOpenOnClone": {
+            "type": "string",
+            "default": "No",
+            "enum": [
+              "No",
+              "Yes",
+              "New Window",
+              "Ask"
+            ],
+            "enumDescriptions": [
+              "Don't open new vscode window when you clone worktree",
+              "Move into worktree when you clone",
+              "Open new vscode window when you clone worktree",
+              "Ask when you clone worktree"
+            ]
+          },
           "gitWorktree.worktree.shouldOpenOnRename": {
             "type": "string",
             "default": "No",
@@ -87,10 +103,10 @@
               "Ask"
             ],
             "enumDescriptions": [
-              "Don't open new vscode window when you rename worktrees",
+              "Don't open new vscode window when you rename worktree",
               "Move into worktree when you rename",
-              "Open new vscode window when you rename worktrees",
-              "Ask when you rename worktrees"
+              "Open new vscode window when you rename worktree",
+              "Ask when you rename worktree"
             ]
           },
           "gitWorktree.worktree.automatically": {
@@ -120,6 +136,11 @@
               "Warn logging level",
               "Info logging level"
             ]
+          },
+          "gitWorktree.worktree.cloneBaseDirectory": {
+            "type": "string",
+            "default": "./.bare",
+            "description": "Base directory to clone git files into"
           }
         }
       },

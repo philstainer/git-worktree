@@ -3,12 +3,14 @@ import { raiseIssue, showUserMessage } from '../helpers/vscode';
 
 import parseUrl from 'parse-url';
 import { resolve } from 'path';
+import settings from '../config/settings';
 import {
   createDirectory,
   createFile,
   isExistingDirectory,
 } from '../helpers/file';
 import { cloneBare, fetch } from '../helpers/git';
+import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
 
 export const clone = async () => {
   try {
@@ -58,11 +60,18 @@ export const clone = async () => {
 
     await createDirectory(newPath);
 
-    await createFile(resolve(newPath, '.git'), `gitdir: ./.bare`);
+    await cloneBare(newPath, parsedUrl.href, settings.cloneBaseDirectory);
 
-    await cloneBare(newPath, parsedUrl.href);
+    if (!['', '.', './'].includes(settings.cloneBaseDirectory))
+      await createFile(
+        resolve(newPath, '.git'),
+        `gitdir: ${settings.cloneBaseDirectory}`
+      );
 
     await fetch(newPath);
+
+    const worktree = { branch: newRepoName, path: newPath };
+    await shouldMoveIntoWorktree(worktree, settings.shouldOpenOnClone);
   } catch (e: any) {
     await raiseIssue(e?.message);
   }

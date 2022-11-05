@@ -19,6 +19,10 @@ const shouldOpenNewWindowOnCreate: boolean =
     .getConfiguration()
     .get('gitWorktree.worktree.openNewWindowOnCreate') ?? false;
 
+const shouldOpenOnClone: INoYesWindowOption =
+  workspace.getConfiguration().get('gitWorktree.worktree.shouldOpenOnClone') ??
+  noYesWindowOptions.no;
+
 const shouldOpenOnRename: INoYesWindowOption =
   workspace.getConfiguration().get('gitWorktree.worktree.shouldOpenOnRename') ??
   noYesWindowOptions.no;
@@ -28,6 +32,10 @@ const shouldPushBranchAutomatically: INoYesOption =
   noYesAskOptions.no;
 
 const loggingLevel = getCurrentLoggingLevel();
+
+const cloneBaseDirectory: string =
+  workspace.getConfiguration().get('gitWorktree.worktree.cloneBaseDirectory') ??
+  './.bare';
 
 // Add
 const baseDirectory: string =
@@ -51,9 +59,11 @@ export default {
   shouldOpenNewWindowOnCloneBare,
   shouldOpenNewWindowOnSwitch,
   shouldOpenNewWindowOnCreate,
+  shouldOpenOnClone,
   shouldOpenOnRename,
   shouldPushBranchAutomatically,
   loggingLevel,
+  cloneBaseDirectory,
 
   // Add
   baseDirectory,

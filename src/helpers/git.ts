@@ -169,9 +169,13 @@ export const removeBranch = async (branchOrBranches: string | string[]) => {
   }
 };
 
-export const cloneBare = async (path: string, url: string) => {
+export const cloneBare = async (
+  path: string,
+  url: string,
+  baseDirectory: string = './.bare'
+) => {
   try {
-    const command = `git -C ${path} clone --bare "${url}" .bare`;
+    const command = `git -C ${path} clone --bare "${url}" ${baseDirectory}`;
     await executeCommand(command);
   } catch (e: any) {
     throw Error(e);
