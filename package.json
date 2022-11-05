@@ -3,6 +3,11 @@
   "displayName": "Git Worktree",
   "description": "Manage git worktree's with ease",
   "version": "0.0.1",
+  "publisher": "philstainer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/philstainer/git-worktree"
+  },
   "engines": {
     "vscode": "^1.72.0"
   },
@@ -263,7 +268,11 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run package",
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "test-compile": "tsc -p ./",
     "compile": "webpack",
     "watch": "webpack --watch",
     "package": "webpack --mode production --devtool hidden-source-map",
@@ -283,6 +292,7 @@
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "@vscode/test-electron": "^2.1.5",
+    "esbuild": "^0.15.13",
     "eslint": "^8.24.0",
     "glob": "^8.0.3",
     "husky": "^8.0.1",
