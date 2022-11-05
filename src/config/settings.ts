@@ -27,6 +27,11 @@ const shouldOpenOnProject = getVSCodeSetting(
   noYesWindowOptions.yes
 );
 
+const shouldSaveProjectsAutomatically = getVSCodeSetting(
+  'gitWorktree.worktree.saveProjectsAutomatically',
+  noYesAskOptions.no
+);
+
 // List
 const shouldOpenOnSwitch = getVSCodeSetting(
   'gitWorktree.worktree.openOnSwitch',
@@ -81,6 +86,7 @@ export default {
 
   // Project
   shouldOpenOnProject,
+  shouldSaveProjectsAutomatically,
 
   // List
   shouldOpenOnSwitch,

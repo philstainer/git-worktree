@@ -142,6 +142,21 @@
               "Open new vscode window when you select a project",
               "Ask when you select a project"
             ]
+          },
+          "gitWorktree.worktree.saveProjectsAutomatically": {
+            "type": "string",
+            "default": "No",
+            "description": "Should automatically save cloned repositories",
+            "enum": [
+              "No",
+              "Yes",
+              "Ask"
+            ],
+            "enumDescriptions": [
+              "Don't automatically save cloned repositories",
+              "Automatically save cloned repositories",
+              "Ask to save when cloning repositories"
+            ]
           }
         }
       },

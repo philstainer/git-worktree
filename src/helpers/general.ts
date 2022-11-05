@@ -58,29 +58,33 @@ export const getCurrentLoggingLevel = () => {
 export const getGlobalProjects = async () => {
   const projects: IWorktree[] = globalState?.get('projects') ?? [];
 
-  const checkedProjects = await Promise.all(
-    projects.map(async (wt) => ({
-      ...wt,
-      exists: await isExistingDirectory(wt.path),
-    }))
-  );
-
-  const cleanProjects = checkedProjects
+  const checkedProjects = (
+    await Promise.all(
+      projects.map(async (wt) => ({
+        ...wt,
+        exists: await isExistingDirectory(wt.path),
+      }))
+    )
+  )
     .filter((wt) => wt.exists)
     .map(({ exists, ...wt }) => wt);
+
+  const cleanProjects = new Map(
+    checkedProjects.map((p) => {
+      return [p.worktree, p];
+    })
+  );
 
   return cleanProjects;
 };
 
 export const updateGlobalProjects = async (worktree: IWorktree) => {
   const projects = await getGlobalProjects();
+  const newProject = { path: worktree.path, worktree: worktree.worktree };
 
-  const newWorktrees: IWorktree[] = [
-    ...projects,
-    { path: worktree.path, worktree: worktree.worktree },
-  ];
+  projects.set(newProject.worktree, newProject);
 
-  globalState?.update('projects', newWorktrees);
+  globalState?.update('projects', [...projects.values()]);
 
-  return newWorktrees;
+  return projects;
 };

@@ -9,9 +9,9 @@ import {
   createFile,
   isExistingDirectory,
 } from '../helpers/file';
-import { updateGlobalProjects } from '../helpers/general';
 import { cloneBare, setUpBareRepositoryFetch } from '../helpers/git';
 import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
+import { shouldSaveProject } from '../helpers/worktree/shouldSaveProject';
 
 export const clone = async () => {
   try {
@@ -73,7 +73,7 @@ export const clone = async () => {
 
     const worktree = { worktree: newRepoName, path: newPath };
 
-    await updateGlobalProjects(worktree);
+    await shouldSaveProject(worktree, settings.shouldSaveProjectsAutomatically);
 
     await shouldMoveIntoWorktree(worktree, settings.openOnClone);
   } catch (e: any) {

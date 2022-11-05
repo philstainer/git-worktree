@@ -11,7 +11,7 @@ export const projects = async () => {
     const worktrees = await getGlobalProjects();
 
     // Filter out current .bare repo
-    const filteredProjects = worktrees.filter(
+    const filteredProjects = [...worktrees.values()].filter(
       (wt) => wt.worktree !== currentDirectoryName
     );
     if (!filteredProjects.length)
