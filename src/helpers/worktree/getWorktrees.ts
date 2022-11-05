@@ -44,8 +44,10 @@ const getFilteredWorktrees = async (
       };
     });
 
-  if (showCurrentWorktree)
-    splitWorktrees.filter((worktree) => worktree.worktree !== currentWorktree);
+  if (!showCurrentWorktree)
+    splitWorktrees = splitWorktrees.filter(
+      (worktree) => worktree.worktree !== currentWorktree
+    );
 
   if (!includeBare)
     splitWorktrees = splitWorktrees.filter(
