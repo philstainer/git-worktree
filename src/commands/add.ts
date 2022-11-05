@@ -28,7 +28,7 @@ export const add = async () => {
 
     const [localWorktrees, remoteBranches] = await Promise.all([
       getWorktrees(),
-      getRemoteBranches(),
+      settings.shouldIncludeRemoteBranches ? getRemoteBranches() : [],
     ]);
 
     // Filter out remote branches that already exist locally

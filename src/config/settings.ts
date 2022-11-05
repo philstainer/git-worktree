@@ -44,7 +44,7 @@ const baseDirectory: string =
 
 const shouldIncludeRemoteBranches: boolean =
   workspace.getConfiguration().get('gitWorktree.worktree.includeRemote') ??
-  false;
+  true;
 
 const shouldPruneBranches: boolean =
   workspace.getConfiguration().get('gitWorktree.worktree.pruneBranches') ??

@@ -20,7 +20,7 @@ export const publish = async () => {
     await fetch();
 
     const [localWorktrees, remoteBranches] = await Promise.all([
-      getWorktrees(),
+      getWorktrees(false, true),
       getRemoteBranches(),
     ]);
 

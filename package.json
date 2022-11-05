@@ -155,7 +155,7 @@
           },
           "gitWorktree.worktree.includeRemote": {
             "type": "boolean",
-            "default": false,
+            "default": true,
             "description": "Should include remote branches when adding new worktree"
           },
           "gitWorktree.worktree.pruneBranches": {

@@ -3,13 +3,20 @@ import { BARE_REPOSITORY } from '#/src/config/constants';
 import { getCurrentBranchName } from '../git';
 import { removeFirstAndLastCharacter } from '../string';
 
-export const getWorktrees = async (withBareRepo = false) => {
+export const getWorktrees = async (
+  withBareRepo = false,
+  showCurrentWorktree = false
+) => {
   const command = 'git worktree list';
 
   try {
     const { stdout } = await executeCommand(command);
 
-    const worktrees = await getFilteredWorktrees(stdout, withBareRepo);
+    const worktrees = await getFilteredWorktrees(
+      stdout,
+      withBareRepo,
+      showCurrentWorktree
+    );
 
     return worktrees;
   } catch (e: any) {
@@ -17,7 +24,11 @@ export const getWorktrees = async (withBareRepo = false) => {
   }
 };
 
-const getFilteredWorktrees = async (stdout: string, includeBare = false) => {
+const getFilteredWorktrees = async (
+  stdout: string,
+  includeBare = false,
+  showCurrentWorktree = false
+) => {
   const currentWorktree = await getCurrentBranchName();
 
   let splitWorktrees = stdout
@@ -31,8 +42,10 @@ const getFilteredWorktrees = async (stdout: string, includeBare = false) => {
         hash: worktree ? hash : '',
         worktree: removeFirstAndLastCharacter(worktree ? worktree : hash),
       };
-    })
-    .filter((worktree) => worktree.worktree !== currentWorktree);
+    });
+
+  if (showCurrentWorktree)
+    splitWorktrees.filter((worktree) => worktree.worktree !== currentWorktree);
 
   if (!includeBare)
     splitWorktrees = splitWorktrees.filter(
