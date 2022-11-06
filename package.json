@@ -4,13 +4,18 @@
   "description": "Manage git worktree's with ease",
   "version": "0.2.1",
   "publisher": "philstainer",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "homepage": "https://github.com/philstainer/git-worktree/blob/main/README.md",
+  "bugs": {
+    "url": "https://github.com/philstainer/git-worktree/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/philstainer/git-worktree"
   },
-  "engines": {
-    "vscode": "^1.72.0"
-  },
+  "icon": "images/icon.png",
   "categories": [
     "Other"
   ],
