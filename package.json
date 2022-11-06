@@ -2,7 +2,7 @@
   "name": "git-worktree",
   "displayName": "Git Worktree",
   "description": "Manage git worktree's with ease",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "publisher": "philstainer",
   "engines": {
     "vscode": "^1.72.0"
