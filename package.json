@@ -1,7 +1,7 @@
 {
   "name": "git-worktree",
   "displayName": "Git Worktree",
-  "description": "Manage git worktree's with ease",
+  "description": "Manage git worktrees with ease",
   "version": "1.0.0",
   "publisher": "philstainer",
   "engines": {
