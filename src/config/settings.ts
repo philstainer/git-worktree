@@ -41,7 +41,7 @@ const shouldOpenOnSwitch = getVSCodeSetting(
 // Add
 const baseDirectory = getVSCodeSetting(
   'gitWorktree.worktree.baseDirectory',
-  './'
+  '../'
 );
 
 const shouldIncludeRemoteBranches = getVSCodeSetting(

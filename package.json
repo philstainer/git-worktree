@@ -77,9 +77,9 @@
               "Ask"
             ],
             "enumDescriptions": [
-              "Do not automatically push created branches",
-              "Automatically push created branches to remote",
-              "Ask to push to remote when creating branches"
+              "Do not automatically push worktrees",
+              "Automatically push worktrees to remote",
+              "Ask to push worktrees to remote"
             ]
           },
           "gitWorktree.worktree.loggingLevel": {
@@ -194,7 +194,7 @@
         "properties": {
           "gitWorktree.worktree.baseDirectory": {
             "type": "string",
-            "default": "./",
+            "default": "../",
             "description": "Absolute or relative path to worktree base directory location"
           },
           "gitWorktree.worktree.includeRemote": {
