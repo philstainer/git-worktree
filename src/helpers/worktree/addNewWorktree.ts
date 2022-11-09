@@ -12,7 +12,7 @@ export const addNewWorktree = async (newBranch: string) => {
   const newWorktree = { worktree: newBranch, path: newWorktreePath };
 
   try {
-    const worktreeAddCommand = `git worktree add -b ${newBranch} ${newWorktreePath}`;
+    const worktreeAddCommand = `git worktree add -B ${newBranch} ${newWorktreePath}`;
     await executeCommand(worktreeAddCommand);
 
     const pullCommand = `git -C ${newWorktreePath} pull`;
