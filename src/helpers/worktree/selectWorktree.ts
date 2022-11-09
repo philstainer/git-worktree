@@ -35,7 +35,7 @@ export const selectWorktree = async <T extends boolean = false>(
   if (!worktree) return;
 
   return worktree.map((worktree) => ({
-    branch: worktree.label,
+    worktree: worktree.label,
     path: worktree.detail,
   })) as any;
 };
