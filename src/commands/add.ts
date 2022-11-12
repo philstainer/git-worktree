@@ -29,7 +29,7 @@ export const add = async () => {
       await removeLocalBranchesThatDoNotExistOnRemoteRepository();
 
     const [localWorktrees, remoteBranches] = await Promise.all([
-      getWorktrees(),
+      getWorktrees(false, true),
       settings.shouldIncludeRemoteBranches ? getRemoteBranches() : [],
     ]);
 
