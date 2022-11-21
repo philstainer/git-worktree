@@ -1,4 +1,5 @@
 import type { IWorktree } from '#/@types/worktree';
+import settings from '#/src/config/settings';
 import { window } from 'vscode';
 
 export const selectWorktree = async <T extends boolean = false>(
@@ -20,6 +21,7 @@ export const selectWorktree = async <T extends boolean = false>(
     const worktree = await window.showQuickPick(items, {
       matchOnDetail: true,
       canPickMany,
+      ignoreFocusOut: settings.shouldCloseOnBlur,
     });
 
     if (!worktree) return;
@@ -30,6 +32,7 @@ export const selectWorktree = async <T extends boolean = false>(
   const worktree = await window.showQuickPick(items, {
     matchOnDetail: true,
     canPickMany,
+    ignoreFocusOut: settings.shouldCloseOnBlur,
   });
 
   if (!worktree) return;

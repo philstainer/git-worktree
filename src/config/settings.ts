@@ -21,6 +21,11 @@ const openOnClone = getVSCodeSetting(
   noYesWindowOptions.yes
 );
 
+const shouldCloseOnBlur = getVSCodeSetting(
+  'gitWorktree.worktree.closeInputOnBlur',
+  true
+);
+
 // Project
 const shouldOpenOnProject = getVSCodeSetting(
   'gitWorktree.worktree.openOnProject',
@@ -79,6 +84,7 @@ const shouldRemoveMultiple = getVSCodeSetting(
 export default {
   shouldPushBranchAutomatically,
   loggingLevel,
+  shouldCloseOnBlur,
 
   // Clone
   cloneBaseDirectory,

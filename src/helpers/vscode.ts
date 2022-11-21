@@ -91,6 +91,7 @@ export const getUniqueWorktreeName = async ({
   return window.showInputBox({
     placeHolder,
     prompt,
+    ignoreFocusOut: settings.shouldCloseOnBlur,
     value,
     validateInput: async (value) => {
       const text = value?.trim();

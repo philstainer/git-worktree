@@ -101,6 +101,11 @@
               "Warn logging level",
               "Info logging level"
             ]
+          },
+          "gitWorktree.worktree.closeInputOnBlur": {
+            "type": "boolean",
+            "default": true,
+            "description": "Should we close input automatically when a user switches focus"
           }
         }
       },

@@ -18,6 +18,7 @@ export const clone = async () => {
     const cloneUrl = await window.showInputBox({
       placeHolder: 'Git repository url',
       prompt: 'Please enter a valid url to clone',
+      ignoreFocusOut: settings.shouldCloseOnBlur,
     });
     if (!cloneUrl)
       return showUserMessage('Warn', 'Aborted as no url was given');
@@ -40,6 +41,7 @@ export const clone = async () => {
     const newRepoName = await window.showInputBox({
       placeHolder: 'Repository name',
       prompt: 'Enter new name for repository',
+      ignoreFocusOut: settings.shouldCloseOnBlur,
       value: repoName,
       validateInput: async (value) => {
         const text = value?.trim();

@@ -73,6 +73,10 @@ Set logging level for extension
 
 - `gitWorktree.worktree.loggingLevel`: Info
 
+Should we close prompts when user loses focus
+
+- `gitWorktree.worktree.closeInputOnBlur`: True
+
 ### Clone Settings
 
 Set the name of the folder the bare repository contents will be push into

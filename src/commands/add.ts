@@ -45,6 +45,7 @@ export const add = async () => {
       [createWorktreeOption, ...filteredBranches],
       {
         placeHolder: 'Create new worktree or select remote branch',
+        ignoreFocusOut: settings.shouldCloseOnBlur,
       }
     );
     if (!branch)
@@ -68,6 +69,7 @@ export const add = async () => {
 
       let trackingBranch = await window.showQuickPick(remoteBranches, {
         placeHolder: 'Select remote branch to track',
+        ignoreFocusOut: settings.shouldCloseOnBlur,
       });
 
       worktree = await addNewWorktree(newBranch, trackingBranch);
