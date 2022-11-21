@@ -2,7 +2,10 @@ import { executeCommand } from '../general';
 import { checkIfBranchExistsOnRemote } from '../git';
 import { calculateNewWorktreePath } from './calculateNewWorktreePath';
 
-export const addNewWorktree = async (newBranch: string) => {
+export const addNewWorktree = async (
+  newBranch: string,
+  trackingBranch?: string
+) => {
   const isExistingBranch = await checkIfBranchExistsOnRemote(newBranch);
   if (isExistingBranch)
     throw new Error(`Branch '${newBranch}' already exists.`);
@@ -12,11 +15,10 @@ export const addNewWorktree = async (newBranch: string) => {
   const newWorktree = { worktree: newBranch, path: newWorktreePath };
 
   try {
-    const worktreeAddCommand = `git worktree add -B ${newBranch} ${newWorktreePath}`;
-    await executeCommand(worktreeAddCommand);
+    const addCommand = `git worktree add -B ${newBranch} ${newWorktreePath}`;
+    const addCommandWithTracking = `git worktree add --track -B ${newBranch} ${newWorktreePath} origin/${trackingBranch}`;
 
-    const pullCommand = `git -C ${newWorktreePath} pull`;
-    await executeCommand(pullCommand);
+    await executeCommand(trackingBranch ? addCommandWithTracking : addCommand);
 
     return newWorktree;
   } catch (e: any) {

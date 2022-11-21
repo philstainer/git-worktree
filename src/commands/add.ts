@@ -66,7 +66,11 @@ export const add = async () => {
           "Aborted as worktree wasn't given a name"
         );
 
-      worktree = await addNewWorktree(newBranch);
+      let trackingBranch = await window.showQuickPick(remoteBranches, {
+        placeHolder: 'Select remote branch to track',
+      });
+
+      worktree = await addNewWorktree(newBranch, trackingBranch);
 
       await shouldPushWorktree(worktree);
     } else {
