@@ -43,14 +43,14 @@ export const rename = async () => {
 
     const renamedWorktree = await renameWorktree(worktree, newBranchName);
 
-    await pushWorktree(renamedWorktree);
+    await shouldPushWorktree(renamedWorktree);
     await shouldMoveIntoWorktree(renamedWorktree, settings.openOnRename);
   } catch (e: any) {
     await raiseIssue(e?.message);
   }
 };
 
-export const pushWorktree = async (worktree: IWorktree) => {
+export const shouldPushWorktree = async (worktree: IWorktree) => {
   const origin = await getRemoteOrigin();
   if (!origin) return;
 

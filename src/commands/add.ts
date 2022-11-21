@@ -15,7 +15,7 @@ import { addNewWorktree } from '../helpers/worktree/addNewWorktree';
 import { addRemoteWorktree } from '../helpers/worktree/addRemoteWorktree';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
 import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
-import { pushWorktree } from './rename';
+import { shouldPushWorktree } from './rename';
 
 const createWorktreeOption = 'Create new worktree';
 
@@ -68,7 +68,7 @@ export const add = async () => {
 
       worktree = await addNewWorktree(newBranch);
 
-      await pushWorktree(worktree);
+      await shouldPushWorktree(worktree);
     } else {
       worktree = await addRemoteWorktree(branch);
     }
