@@ -1,4 +1,4 @@
-name: Release
+name: Release using conventional commits (main branch)
 on:
   push:
     branches:
@@ -7,7 +7,9 @@ on:
 jobs:
   release: 
     runs-on: ubuntu-latest
-    
+    permissions:
+      contents: write
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v2.5.0
@@ -17,15 +19,13 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.github_token }}
-
-      - name: Create Release
-        uses: actions/create-release@v1
+        
+      - name: Create Release 
+        uses: ncipollo/release-action@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.outputs.tag }}
+          tag: ${{ steps.changelog.outputs.tag }}
+          name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
           
       - name: Setup Node.js environment
