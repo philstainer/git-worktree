@@ -24,7 +24,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.changelog.outputs.tag }}
-          name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
           
       - name: Setup Node.js environment
