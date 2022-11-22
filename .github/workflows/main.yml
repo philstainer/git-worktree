@@ -20,23 +20,28 @@ jobs:
         with:
           github-token: ${{ secrets.github_token }}
         
-      - name: Create Release 
+      - name: Create Release
         uses: ncipollo/release-action@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
           tag: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
           
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.5.1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
 
       - name: Install the dependencies
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
         run: npm i
 
       - name: Install vsce
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
         run: npm i -g vsce
 
       - name: Publish
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
         run: vsce publish -p ${{ secrets.VSCE_PAT }}
