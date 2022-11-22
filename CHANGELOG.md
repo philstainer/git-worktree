@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/philstainer/git-worktree/compare/v1.1.1...v1.1.2) (2022-11-22)
+
+
+### Bug Fixes
+
+* testing action again ([4916f7d](https://github.com/philstainer/git-worktree/commit/4916f7de388a72e6e9a927272a24c7d9a306aeb6))
+
+
+
 ## [1.1.1](https://github.com/philstainer/git-worktree/compare/v1.1.0...v1.1.1) (2022-11-22)
 
 
@@ -31,17 +40,13 @@
 
 
 
-## [1.0.2](https://github.com/philstainer/git-worktree/compare/v1.0.1...v1.0.2) (2022-11-09 )
+## [1.0.2](https://github.com/philstainer/git-worktree/compare/v1.0.1...v1.0.2) (2022-11-09)
 
 
 ### Bug Fixes
 
 * add should override branch if exists ([790c0ab](https://github.com/philstainer/git-worktree/commit/790c0ab5ce40c98ecb1f426d15e5cfdc54254e30))
 * remove multiple worktrees ([4d21a46](https://github.com/philstainer/git-worktree/commit/4d21a468d915e3e5ec3263019106200b8b52225c))
-
-
-
-## [1.0.1](https://github.com/philstainer/git-worktree/compare/v1.0.0...v1.0.1) (2022-11-06)
 
 
 
