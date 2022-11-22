@@ -19,6 +19,7 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.github_token }}
+          release-count: 0
         
       - name: Create Release
         uses: ncipollo/release-action@v1
