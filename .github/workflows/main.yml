@@ -5,11 +5,12 @@ on:
       - main
       
 jobs:
-  change-log: 
+  release: 
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2.5.0
       
       - name: Conventional Changelog Action
         id: changelog
@@ -28,11 +29,6 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
           
-  publish:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.5.1
         with:
