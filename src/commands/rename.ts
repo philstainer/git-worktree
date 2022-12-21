@@ -5,7 +5,7 @@ import {
   fetch,
   getRemoteOrigin,
   pushNewBranchToRemote,
-  throwIfNotRepository,
+  throwIfNotInWorktreeRepository,
 } from '../helpers/git';
 import {
   getUniqueWorktreeName,
@@ -19,7 +19,7 @@ import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktr
 
 export const rename = async () => {
   try {
-    await throwIfNotRepository();
+    await throwIfNotInWorktreeRepository();
 
     const worktrees = await getWorktrees();
     if (!worktrees.length)

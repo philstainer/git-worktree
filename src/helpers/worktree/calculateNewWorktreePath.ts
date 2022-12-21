@@ -1,7 +1,7 @@
 import settings from '#/src/config/settings';
 import { isAbsolute, resolve } from 'path';
 import { executeCommand } from '../general';
-import { isBareRepository } from '../git';
+import { isInsideBareRepository } from '../git';
 import { removeNewLine } from '../string';
 
 const baseDirectory = settings.baseDirectory;
@@ -13,7 +13,7 @@ export const calculateNewWorktreePath = async (branch: string) => {
 
     const path = removeNewLine(stdout);
 
-    const isBare = await isBareRepository(path);
+    const isBare = await isInsideBareRepository(path);
     if (!isBare) throw new Error('Bare repository not found');
 
     const resolvedPath = isAbsolute(baseDirectory)

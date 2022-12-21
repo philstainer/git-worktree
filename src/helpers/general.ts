@@ -10,6 +10,8 @@ import { loggingOptions, loggingOptionValue } from '../config/constants';
 import { globalState } from '../extension';
 import { isExistingDirectory } from './file';
 
+import type { ExecOptions } from 'child_process';
+
 const exec = util.promisify(require('child_process').exec);
 
 export const getCurrentPath = () => workspace.rootPath;
@@ -21,7 +23,10 @@ export const getCurrentDirectory = () => {
 };
 export const getWorkspaceFilePath = () => workspace.workspaceFile;
 
-export const executeCommand = async (command: string, options?: any) => {
+export const executeCommand = async (
+  command: string,
+  options?: ExecOptions
+) => {
   let execOptions = options;
 
   if (!options) {

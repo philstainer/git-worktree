@@ -1,4 +1,4 @@
-import { throwIfNotRepository } from '#/helpers/git';
+import { throwIfNotInWorktreeRepository } from '#/helpers/git';
 import settings from '../config/settings';
 import { raiseIssue, showUserMessage } from '../helpers/vscode';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
@@ -7,7 +7,7 @@ import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktr
 
 export const list = async () => {
   try {
-    await throwIfNotRepository();
+    await throwIfNotInWorktreeRepository();
 
     const worktrees = await getWorktrees();
     if (!worktrees.length)
