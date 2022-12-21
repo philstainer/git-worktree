@@ -4,7 +4,7 @@ import {
   fetch,
   getRemoteBranches,
   removeLocalBranchesThatDoNotExistOnRemoteRepository,
-  throwIfNotRepository,
+  throwIfNotInWorktreeRepository,
 } from '../helpers/git';
 import {
   getUniqueWorktreeName,
@@ -21,7 +21,7 @@ const createWorktreeOption = 'Create new worktree';
 
 export const add = async () => {
   try {
-    await throwIfNotRepository();
+    await throwIfNotInWorktreeRepository();
 
     await fetch();
 

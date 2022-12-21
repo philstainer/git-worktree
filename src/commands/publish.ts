@@ -3,7 +3,7 @@ import {
   getRemoteBranches,
   getRemoteOrigin,
   pushNewBranchToRemote,
-  throwIfNotRepository,
+  throwIfNotInWorktreeRepository,
 } from '../helpers/git';
 import { raiseIssue, showUserMessage } from '../helpers/vscode';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
@@ -11,7 +11,7 @@ import { selectWorktree } from '../helpers/worktree/selectWorktree';
 
 export const publish = async () => {
   try {
-    await throwIfNotRepository();
+    await throwIfNotInWorktreeRepository();
 
     const hasRemote = await getRemoteOrigin();
     if (!hasRemote)

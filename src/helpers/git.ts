@@ -6,17 +6,6 @@ import { executeCommand } from './general';
 import { removeNewLine } from './string';
 import { getWorktrees } from './worktree/getWorktrees';
 
-export const isGitRepository = async () => {
-  try {
-    const command = 'git rev-parse --is-inside-work-tree';
-    await executeCommand(command);
-
-    return true;
-  } catch (e: any) {
-    return false;
-  }
-};
-
 export const getRemoteOrigin = async () => {
   const command = 'git remote';
 
@@ -30,25 +19,37 @@ export const getRemoteOrigin = async () => {
   }
 };
 
-export const throwIfNotRepository = async () => {
-  const isRepo = await isGitRepository();
+export const isInsideWorkTree = async () => {
+  try {
+    const command = 'git rev-parse --is-inside-work-tree';
+    await executeCommand(command);
 
-  if (isRepo) return;
-
-  throw new Error('This is not a git repository.');
+    return true;
+  } catch (e: any) {
+    return false;
+  }
 };
 
-export const isBareRepository = async (path: string) => {
+export const isInsideBareRepository = async (path?: string) => {
   try {
-    const command = `git -C ${path} rev-parse --is-bare-repository`;
-    const { stdout } = await executeCommand(command);
+    const command = `git rev-parse --is-bare-repository`;
+    const { stdout } = await executeCommand(command, { cwd: path });
 
     const result = removeNewLine(stdout);
 
     return result === 'true';
   } catch (e: any) {
-    throw Error(e);
+    return false;
   }
+};
+
+export const throwIfNotInWorktreeRepository = async () => {
+  const isWorktree = await isInsideWorkTree();
+  const isBareRepo = await isInsideBareRepository();
+
+  if (isWorktree || isBareRepo) return;
+
+  throw new Error('You are not in a worktree or bare repo');
 };
 
 const hasBareRepository = async () => {

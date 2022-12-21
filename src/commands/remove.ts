@@ -1,4 +1,4 @@
-import { removeBranch, throwIfNotRepository } from '#/helpers/git';
+import { removeBranch, throwIfNotInWorktreeRepository } from '#/helpers/git';
 import settings from '../config/settings';
 import { raiseIssue, showUserMessage } from '../helpers/vscode';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
@@ -8,7 +8,7 @@ import { selectWorktree } from '../helpers/worktree/selectWorktree';
 
 export const remove = async () => {
   try {
-    await throwIfNotRepository();
+    await throwIfNotInWorktreeRepository();
 
     const worktrees = await getWorktrees();
     if (!worktrees.length)
