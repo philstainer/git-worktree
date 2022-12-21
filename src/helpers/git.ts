@@ -111,7 +111,7 @@ export const getCurrentBranchName = async () => {
 
     return stdout.split('\n')[0];
   } catch (e: any) {
-    throw Error(e);
+    return null;
   }
 };
 
