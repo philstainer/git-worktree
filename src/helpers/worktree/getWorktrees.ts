@@ -1,6 +1,6 @@
 import { executeCommand } from '#/helpers/general';
 import { BARE_REPOSITORY } from '#/src/config/constants';
-import { getCurrentBranchName } from '../git';
+import { getCurrentBranchName, isInsideBareRepository } from '../git';
 import { removeFirstAndLastCharacter } from '../string';
 
 export const getWorktrees = async (
@@ -12,10 +12,12 @@ export const getWorktrees = async (
   try {
     const { stdout } = await executeCommand(command);
 
+    const isRootDirectory = await isInsideBareRepository();
+
     const worktrees = await getFilteredWorktrees(
       stdout,
       withBareRepo,
-      showCurrentWorktree
+      isRootDirectory || showCurrentWorktree
     );
 
     return worktrees;
