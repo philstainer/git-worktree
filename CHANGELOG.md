@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/philstainer/git-worktree/compare/v1.1.3...v1.2.0) (2022-12-24)
+
+
+### Features
+
+* add progress indicator when removing worktrees ([b527966](https://github.com/philstainer/git-worktree/commit/b5279668182827fc70ba2c0c5005ce9c5f38434c))
+
+
+
 ## [1.1.3](https://github.com/philstainer/git-worktree/compare/v1.1.2...v1.1.3) (2022-12-21)
 
 
