@@ -1,3 +1,13 @@
+## [1.2.1](https://github.com/philstainer/git-worktree/compare/v1.2.0...v1.2.1) (2022-12-24)
+
+
+### Bug Fixes
+
+* path should default to current path ([e6ce73f](https://github.com/philstainer/git-worktree/commit/e6ce73fc3583cc6a217ae24bd8b0c6da8d1eab81))
+* return all worktrees when in root dir ([82450dc](https://github.com/philstainer/git-worktree/commit/82450dc53bb11c9276e8d5d329f6561ca25f1dcc))
+
+
+
 # [1.2.0](https://github.com/philstainer/git-worktree/compare/v1.1.3...v1.2.0) (2022-12-24)
 
 
