@@ -1,4 +1,4 @@
-import { IWorktree } from '#/@types/worktree';
+import type { IWorktree } from '#/@types/worktree';
 import { APP_NAME } from '#/src/config/constants';
 import { executeCommand } from '../general';
 import { showUserMessage } from '../vscode';
@@ -33,7 +33,7 @@ export const removeWorktree = async ({ worktree, path }: IWorktree) => {
     const forceCommand = `git worktree remove -f ${worktree}`;
     try {
       await executeCommand(forceCommand);
-      await showUserMessage(
+      showUserMessage(
         'Info',
         `Worktree named '${worktree}' was removed successfully`
       );
