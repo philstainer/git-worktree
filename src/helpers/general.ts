@@ -27,14 +27,7 @@ export const executeCommand = async (
   command: string,
   options?: ExecOptions
 ) => {
-  let execOptions = options;
-
-  if (!options) {
-    const currentPath = getCurrentPath();
-    execOptions = {
-      cwd: currentPath,
-    };
-  }
+  let execOptions = { ...options, cwd: options?.cwd ?? getCurrentPath() };
 
   try {
     const { stdout } = await exec(command, execOptions);
