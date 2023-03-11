@@ -35,7 +35,7 @@ export const clone = async () => {
     if (!selectFolder?.length)
       return showUserMessage('Warn', 'Aborted as no folder was selected');
 
-    const path = selectFolder[0].path;
+    const path = selectFolder[0].fsPath;
     const repoName = parsedUrl.pathname.split('/')[2].replace('.git', '');
 
     const newRepoName = await window.showInputBox({
