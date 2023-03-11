@@ -1,3 +1,12 @@
+## [1.2.2](https://github.com/philstainer/git-worktree/compare/v1.2.1...v1.2.2) (2023-03-11)
+
+
+### Bug Fixes
+
+* **clone:** change path to use fsPath ([0cf5ca9](https://github.com/philstainer/git-worktree/commit/0cf5ca9bcd06947b49befe8bd42998da771d9e9c))
+
+
+
 ## [1.2.1](https://github.com/philstainer/git-worktree/compare/v1.2.0...v1.2.1) (2022-12-24)
 
 
