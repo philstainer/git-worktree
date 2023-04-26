@@ -31,7 +31,19 @@ much cleaner and cleaner to manage
 
 You can choose to create a new worktree or create one from a remote branch that exists in your repository
 
+##### Create new worktree
+
+- Command Palette -> 'Git Worktree: Add'
+- Select 'Create new worktree'
+- Set a name for the worktree
+- Set your tracking branch (think of this as your base branch, normally this is `main` or `master`)
+
 ![add-local](https://user-images.githubusercontent.com/39385802/200139178-a6246556-6d6a-4997-a4b8-d593871e7207.gif)
+
+##### Add remote worktree
+
+- Command Palette -> 'Git Worktree: Add'
+- Select remote worktree
 
 ![add-remote](https://user-images.githubusercontent.com/39385802/200139183-c34598c5-62d0-4ed5-8c52-ba44c8faf01d.gif)
 
