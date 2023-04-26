@@ -15,6 +15,7 @@ import { addNewWorktree } from '../helpers/worktree/addNewWorktree';
 import { addRemoteWorktree } from '../helpers/worktree/addRemoteWorktree';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
 import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
+import { sortBranches } from '../helpers/worktree/sortBranches';
 import { shouldPushWorktree } from './rename';
 
 const createWorktreeOption = 'Create new worktree';
@@ -67,12 +68,22 @@ export const add = async () => {
           "Aborted as worktree wasn't given a name"
         );
 
-      let trackingBranch = await window.showQuickPick(remoteBranches, {
+      const sortedRemoteBranches = sortBranches(
+        remoteBranches.map((branch) => ({ label: branch }))
+      );
+
+      let trackingBranch = await window.showQuickPick(sortedRemoteBranches, {
         placeHolder: 'Select remote branch to track',
         ignoreFocusOut: settings.shouldCloseOnBlur,
       });
 
-      worktree = await addNewWorktree(newBranch, trackingBranch);
+      if (!trackingBranch)
+        return showUserMessage(
+          'Warn',
+          'Aborted as no tracking branch was selected'
+        );
+
+      worktree = await addNewWorktree(newBranch, trackingBranch.label);
 
       await shouldPushWorktree(worktree);
     } else {
