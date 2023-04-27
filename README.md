@@ -79,7 +79,9 @@ This extension has the following settings:
 
 Automatically push worktrees to remote
 
-- `gitWorktree.worktree.shouldPushBranchAutomatically`: No
+> :warning: **If you turn this off **: Then the tracking branch will not get updated to your new branch and you will have to run the publish command to fix
+
+- `gitWorktree.worktree.shouldPushBranchAutomatically`: Yes
 
 Set logging level for extension
 

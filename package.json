@@ -74,7 +74,7 @@
         "properties": {
           "gitWorktree.worktree.automatically": {
             "type": "string",
-            "default": "No",
+            "default": "Yes",
             "description": "Should push worktree automatically to remote",
             "enum": [
               "No",
