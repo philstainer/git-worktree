@@ -5,7 +5,7 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: read # for checkout
 
 jobs:
   release:
