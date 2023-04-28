@@ -1,3 +1,9 @@
+## [1.2.6](https://github.com/philstainer/git-worktree/compare/v1.2.5...v1.2.6) (2023-04-28)
+
+### Bug Fixes
+
+- publish command ([f9a2923](https://github.com/philstainer/git-worktree/commit/f9a292344489a5e782ec7372c579c927138e1cd4))
+
 ## [1.2.5](https://github.com/philstainer/git-worktree/compare/v1.2.4...v1.2.5) (2023-04-28)
 
 ### Bug Fixes
