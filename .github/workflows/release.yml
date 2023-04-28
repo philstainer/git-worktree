@@ -43,4 +43,4 @@ jobs:
         run: npx semantic-release
 
       - name: Publish Extension
-        run: npx @vscode/vsce publish -p ${{ secrets.VSCE_PAT }}
+        run: npx @vscode/vsce publish -p ${{ secrets.VSCE_PAT }} --no-dependencies
