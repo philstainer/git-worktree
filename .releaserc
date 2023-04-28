@@ -1,0 +1,141 @@
+{
+  "branches": [
+    "master",
+    "main"
+  ],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits",
+        "releaseRules": [
+          {
+            "type": "*!",
+            "release": "major"
+          },
+          {
+            "type": "debug",
+            "release": "patch"
+          },
+          {
+            "type": "docs",
+            "release": "patch"
+          },
+          {
+            "type": "refactor",
+            "release": "patch"
+          },
+          {
+            "type": "ci",
+            "release": "patch"
+          },
+          {
+            "type": "deps",
+            "release": "patch"
+          },
+          {
+            "type": "test",
+            "release": false
+          },
+          {
+            "type": "style",
+            "release": false
+          },
+          {
+            "scope": "no-release",
+            "release": false
+          }
+        ],
+        "parserOpts": {
+          "noteKeywords": [
+            "BREAKING CHANGE",
+            "BREAKING CHANGES"
+          ]
+        }
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {
+              "type": "perf",
+              "section": "Performance Improvements"
+            },
+            {
+              "type": "revert",
+              "section": "Reverts"
+            },
+            {
+              "type": "docs",
+              "section": "Documentation",
+              "hidden": false
+            },
+            {
+              "type": "style",
+              "section": "Styles",
+              "hidden": true
+            },
+            {
+              "type": "chore",
+              "section": "Miscellaneous Chores",
+              "hidden": false
+            },
+            {
+              "type": "debug",
+              "section": "Debugging",
+              "hidden": false
+            },
+            {
+              "type": "deps",
+              "section": "Dependency Updates",
+              "hidden": false
+            },
+            {
+              "type": "refactor",
+              "section": "Code Refactoring",
+              "hidden": false
+            },
+            {
+              "type": "test",
+              "section": "Tests",
+              "hidden": false
+            },
+            {
+              "type": "ci",
+              "section": "Continuous Integration",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    ],
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    "@semantic-release/github",
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "package.json",
+          "pnpm-lock.yaml",
+          "CHANGELOG.md"
+        ]
+      }
+    ]
+  ]
+}
