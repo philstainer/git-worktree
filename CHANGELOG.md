@@ -1,3 +1,9 @@
+## [1.2.5](https://github.com/philstainer/git-worktree/compare/v1.2.4...v1.2.5) (2023-04-28)
+
+### Bug Fixes
+
+- scripts ([2fee22e](https://github.com/philstainer/git-worktree/commit/2fee22ea5cac29b13c8d86405bee8b3e5761b779))
+
 ## [1.2.4](https://github.com/philstainer/git-worktree/compare/v1.2.3...v1.2.4) (2023-04-28)
 
 ### Bug Fixes
