@@ -127,6 +127,12 @@
       }
     ],
     [
+      "@semantic-release/npm",
+      {
+        "npmPublish": false
+      }
+    ],
+    [
       "@semantic-release/git",
       {
         "assets": [
@@ -134,12 +140,6 @@
           "pnpm-lock.yaml",
           "CHANGELOG.md"
         ]
-      }
-    ],
-    [
-      "@semantic-release/npm",
-      {
-        "npmPublish": false
       }
     ],
     "@semantic-release/github"
