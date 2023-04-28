@@ -1,3 +1,9 @@
+## [1.2.4](https://github.com/philstainer/git-worktree/compare/v1.2.3...v1.2.4) (2023-04-28)
+
+### Bug Fixes
+
+- release job ([8f0b8d0](https://github.com/philstainer/git-worktree/commit/8f0b8d0cb4eb972f4d2ebec450ece8f76ce1610e))
+
 ## [1.2.3](https://github.com/philstainer/git-worktree/compare/v1.2.2...v1.2.3) (2023-04-28)
 
 ### Documentation
