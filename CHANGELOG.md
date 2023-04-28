@@ -1,3 +1,9 @@
+## [1.2.8](https://github.com/philstainer/git-worktree/compare/v1.2.7...v1.2.8) (2023-04-28)
+
+### Bug Fixes
+
+- npm version ([e495a10](https://github.com/philstainer/git-worktree/commit/e495a100b33867a0cdfa3200fe5d47f0fa33d315))
+
 ## [1.2.7](https://github.com/philstainer/git-worktree/compare/v1.2.6...v1.2.7) (2023-04-28)
 
 ### Bug Fixes
