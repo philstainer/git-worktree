@@ -1,3 +1,9 @@
+## [1.2.7](https://github.com/philstainer/git-worktree/compare/v1.2.6...v1.2.7) (2023-04-28)
+
+### Bug Fixes
+
+- package version release ([bf6ee57](https://github.com/philstainer/git-worktree/commit/bf6ee574db6f8ab5b56189cd2b4150812d5208f9))
+
 ## [1.2.6](https://github.com/philstainer/git-worktree/compare/v1.2.5...v1.2.6) (2023-04-28)
 
 ### Bug Fixes
