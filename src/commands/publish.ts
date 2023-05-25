@@ -34,7 +34,7 @@ export const publish = async () => {
     if (!worktree)
       return showUserMessage('Warn', 'Aborted as no worktree was selected');
 
-    await pushNewBranchToRemote(worktree.path);
+    await pushNewBranchToRemote(worktree);
 
     showUserMessage(
       'Info',

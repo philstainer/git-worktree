@@ -6,7 +6,7 @@ import type {
 import { basename } from 'path';
 import * as util from 'util';
 import { workspace } from 'vscode';
-import { loggingOptions, loggingOptionValue } from '../config/constants';
+import { loggingOptionValue, loggingOptions } from '../config/constants';
 import { globalState } from '../extension';
 import { isExistingDirectory } from './file';
 

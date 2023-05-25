@@ -25,8 +25,8 @@ export const shouldPushWorktree = async (
     if (!answer) return;
     if (answer === noYesWindowOptions.no) return;
 
-    return pushNewBranchToRemote(worktree.path);
+    return pushNewBranchToRemote(worktree);
   }
 
-  pushNewBranchToRemote(worktree.path);
+  pushNewBranchToRemote(worktree);
 };
