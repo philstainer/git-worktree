@@ -67,5 +67,5 @@ export const shouldPushWorktree = async (worktree: IWorktree) => {
     if (answer !== noYesAskOptions.yes) return;
   }
 
-  await pushNewBranchToRemote(worktree.path);
+  await pushNewBranchToRemote(worktree);
 };

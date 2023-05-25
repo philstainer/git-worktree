@@ -4,7 +4,7 @@ import { calculateNewWorktreePath } from './calculateNewWorktreePath';
 
 export const addNewWorktree = async (
   newBranch: string,
-  trackingBranch?: string
+  trackingBranch: string
 ) => {
   const isExistingBranch = await checkIfBranchExistsOnRemote(newBranch);
   if (isExistingBranch)
@@ -15,10 +15,9 @@ export const addNewWorktree = async (
   const newWorktree = { worktree: newBranch, path: newWorktreePath };
 
   try {
-    const addCommand = `git worktree add -B ${newBranch} ${newWorktreePath}`;
-    const addCommandWithTracking = `git worktree add --track -B ${newBranch} ${newWorktreePath} origin/${trackingBranch}`;
+    const addCommand = `git worktree add --track -B ${newBranch} ${newWorktreePath} origin/${trackingBranch}`;
 
-    await executeCommand(trackingBranch ? addCommandWithTracking : addCommand);
+    await executeCommand(addCommand);
 
     return newWorktree;
   } catch (e: any) {

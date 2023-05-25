@@ -1,3 +1,4 @@
+import { type IWorktree } from '#/@types/worktree';
 import {
   BARE_REPOSITORY,
   BARE_REPOSITORY_REMOTE_ORIGIN_FETCH,
@@ -148,9 +149,9 @@ export const getRemoteBranches = async (): Promise<string[]> => {
   }
 };
 
-export const pushNewBranchToRemote = async (path: string) => {
+export const pushNewBranchToRemote = async ({ path, worktree }: IWorktree) => {
   try {
-    const command = `git -C ${path} push -u origin`;
+    const command = `git -C ${path} push --set-upstream origin ${worktree}`;
     await executeCommand(command);
   } catch (e: any) {
     throw Error(e);
