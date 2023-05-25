@@ -1,3 +1,9 @@
+## [1.2.9](https://github.com/philstainer/git-worktree/compare/v1.2.8...v1.2.9) (2023-05-25)
+
+### Bug Fixes
+
+- push upstream ([d0ed9dc](https://github.com/philstainer/git-worktree/commit/d0ed9dcd9191e4bf8a86a22ef68296fe7ef882be))
+
 ## [1.2.8](https://github.com/philstainer/git-worktree/compare/v1.2.7...v1.2.8) (2023-04-28)
 
 ### Bug Fixes
