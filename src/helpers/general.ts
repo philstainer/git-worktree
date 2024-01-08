@@ -10,7 +10,8 @@ import { loggingOptionValue, loggingOptions } from '../config/constants';
 import { globalState } from '../extension';
 import { isExistingDirectory } from './file';
 
-import type { ExecOptions } from 'child_process';
+import { SpawnOptions, spawn, type ExecOptions } from 'child_process';
+import { showUserMessage } from './vscode';
 
 const exec = util.promisify(require('child_process').exec);
 
@@ -35,6 +36,26 @@ export const executeCommand = async (
   } catch (e: any) {
     const errorMessage = `command: '${command}'. error: '${e.message}'`;
     throw Error(errorMessage);
+  }
+};
+
+export const executeBackgroundCommand = (
+  command: string,
+  options?: SpawnOptions
+) => {
+  let execOptions: SpawnOptions = {
+    cwd: getCurrentPath(),
+    ...options,
+    detached: true,
+    stdio: 'ignore',
+    shell: true,
+  };
+
+  try {
+    const subprocess = spawn(command, execOptions);
+    subprocess.unref();
+  } catch (e: any) {
+    showUserMessage('Error', `command: '${command}'. error: '${e.message}'`);
   }
 };
 

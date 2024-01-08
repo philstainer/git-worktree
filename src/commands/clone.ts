@@ -10,6 +10,7 @@ import {
   isExistingDirectory,
 } from '../helpers/file';
 import { cloneBare, setUpBareRepositoryFetch } from '../helpers/git';
+import { processEvents } from '../helpers/worktree/processEvents';
 import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
 import { shouldSaveProject } from '../helpers/worktree/shouldSaveProject';
 
@@ -76,6 +77,9 @@ export const clone = async () => {
     const worktree = { worktree: newRepoName, path: newPath };
 
     await shouldSaveProject(worktree, settings.shouldSaveProjectsAutomatically);
+
+    // Process effects
+    await processEvents({ event: 'onWorktreeCloned', path: worktree.path });
 
     await shouldMoveIntoWorktree(worktree, settings.openOnClone);
   } catch (e: any) {

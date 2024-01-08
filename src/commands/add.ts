@@ -14,6 +14,7 @@ import {
 import { addNewWorktree } from '../helpers/worktree/addNewWorktree';
 import { addRemoteWorktree } from '../helpers/worktree/addRemoteWorktree';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
+import { processEvents } from '../helpers/worktree/processEvents';
 import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
 import { sortBranches } from '../helpers/worktree/sortBranches';
 import { shouldPushWorktree } from './rename';
@@ -89,6 +90,9 @@ export const add = async () => {
     } else {
       worktree = await addRemoteWorktree(branch);
     }
+
+    // Process effects
+    await processEvents({ event: 'onWorktreeCreated', path: worktree.path });
 
     await shouldMoveIntoWorktree(worktree, settings.shouldOpenOnAdd);
   } catch (e: any) {
