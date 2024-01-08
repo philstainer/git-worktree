@@ -10,7 +10,7 @@ import { loggingOptionValue, loggingOptions } from '../config/constants';
 import { globalState } from '../extension';
 import { isExistingDirectory } from './file';
 
-import { SpawnOptions, spawn, type ExecOptions } from 'child_process';
+import { spawn, type ExecOptions, type SpawnOptions } from 'child_process';
 import { showUserMessage } from './vscode';
 
 const exec = util.promisify(require('child_process').exec);
@@ -39,24 +39,36 @@ export const executeCommand = async (
   }
 };
 
-export const executeBackgroundCommand = (
-  command: string,
-  options?: SpawnOptions
-) => {
-  let execOptions: SpawnOptions = {
-    cwd: getCurrentPath(),
-    ...options,
-    detached: true,
-    stdio: 'ignore',
-    shell: true,
-  };
+export const executeBackgroundCommand = async ({
+  event,
+  command,
+  options,
+}: {
+  event: string;
+  command: string;
+  options?: SpawnOptions & { cwd: string };
+}) => {
+  return new Promise<void>((res, rej) => {
+    if (!options?.cwd) return res();
 
-  try {
-    const subprocess = spawn(command, execOptions);
-    subprocess.unref();
-  } catch (e: any) {
-    showUserMessage('Error', `command: '${command}'. error: '${e.message}'`);
-  }
+    let execOptions: SpawnOptions = {
+      ...options,
+      detached: true,
+      stdio: ['ignore', 'ignore', 'ignore'],
+      shell: true,
+    };
+
+    try {
+      const subprocess = spawn(command, execOptions);
+
+      subprocess.unref();
+
+      res();
+    } catch (e: any) {
+      showUserMessage('Error', `command: '${command}'. error: '${e.message}'`);
+      rej(e);
+    }
+  });
 };
 
 export const getCurrentLoggingLevel = () => {

@@ -1,10 +1,10 @@
 import type { ILoggingOptionValue, IWorktreeWithHash } from '#/@types/worktree';
 import {
   APP_NAME,
-  loggingOptionValue,
   OPEN_ISSUE_URL,
+  loggingOptionValue,
 } from '#/config/constants';
-import { commands, env, Uri, window, workspace } from 'vscode';
+import { Uri, commands, env, window, workspace } from 'vscode';
 import settings from '../config/settings';
 import { getRemoteBranches, validateBranchName } from './git';
 import { getWorktrees } from './worktree/getWorktrees';

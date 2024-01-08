@@ -12,7 +12,7 @@ type Event = keyof typeof events;
 
 const configFiles = ['.worktree.json', 'package.json'];
 
-export const processEvents = async ({
+export const processEvent = async ({
   event,
   path,
 }: {
@@ -37,5 +37,9 @@ export const processEvents = async ({
   // No events configured
   if (!workTreeEvents) return;
 
-  executeBackgroundCommand(workTreeEvents[event], { cwd: path });
+  return executeBackgroundCommand({
+    event,
+    command: workTreeEvents[event],
+    options: { cwd: path },
+  });
 };

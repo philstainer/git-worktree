@@ -13,7 +13,7 @@ import {
   showUserMessage,
 } from '../helpers/vscode';
 import { getWorktrees } from '../helpers/worktree/getWorktrees';
-import { processEvents } from '../helpers/worktree/processEvents';
+import { processEvent } from '../helpers/worktree/processEvent';
 import { renameWorktree } from '../helpers/worktree/renameWorktree';
 import { selectWorktree } from '../helpers/worktree/selectWorktree';
 import { shouldMoveIntoWorktree } from '../helpers/worktree/shouldMoveIntoWorktree';
@@ -47,7 +47,7 @@ export const rename = async () => {
     await shouldPushWorktree(renamedWorktree);
 
     // Process effects
-    await processEvents({
+    await processEvent({
       event: 'onWorktreeRenamed',
       path: renamedWorktree.path,
     });
