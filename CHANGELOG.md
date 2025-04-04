@@ -1,3 +1,13 @@
+## [1.3.0](https://github.com/philstainer/git-worktree/compare/v1.2.9...v1.3.0) (2025-04-04)
+
+### Features
+
+- add option to skip git hooks when pushing ([3cd62ac](https://github.com/philstainer/git-worktree/commit/3cd62ace0657b4ad4ba19316d911de599c1b20a7))
+
+### Continuous Integration
+
+- update CI workflow and dependencies to latest versions ([c2c204e](https://github.com/philstainer/git-worktree/commit/c2c204e6fb0a890b9c58496503fbb98ac9242323))
+
 ## [1.2.9](https://github.com/philstainer/git-worktree/compare/v1.2.8...v1.2.9) (2023-05-25)
 
 ### Bug Fixes
