@@ -285,7 +285,8 @@
     "esbuild": "pnpm run esbuild-base --sourcemap",
     "watch": "pnpm run esbuild-base --sourcemap --watch",
     "test-compile": "tsc -p ./",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "deploy": "vsce publish"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
@@ -299,6 +300,7 @@
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "@vscode/test-electron": "^2.1.5",
+    "@vscode/vsce": "^3.3.2",
     "conventional-changelog-conventionalcommits": "^5.0.0",
     "esbuild": "^0.15.13",
     "eslint": "^8.24.0",
