@@ -10,6 +10,16 @@ const shouldPushBranchAutomatically = getVSCodeSetting(
 
 const loggingLevel = getCurrentLoggingLevel();
 
+const shouldCloseOnBlur = getVSCodeSetting(
+  'gitWorktree.worktree.closeInputOnBlur',
+  true
+);
+
+const shouldSkipGitHooks = getVSCodeSetting(
+  'gitWorktree.worktree.skipGitHooks',
+  false
+);
+
 // Clone
 const cloneBaseDirectory = getVSCodeSetting(
   'gitWorktree.worktree.cloneBaseDirectory',
@@ -19,11 +29,6 @@ const cloneBaseDirectory = getVSCodeSetting(
 const openOnClone = getVSCodeSetting(
   'gitWorktree.worktree.openOnClone',
   noYesWindowOptions.yes
-);
-
-const shouldCloseOnBlur = getVSCodeSetting(
-  'gitWorktree.worktree.closeInputOnBlur',
-  true
 );
 
 // Project
@@ -85,6 +90,7 @@ export default {
   shouldPushBranchAutomatically,
   loggingLevel,
   shouldCloseOnBlur,
+  shouldSkipGitHooks,
 
   // Clone
   cloneBaseDirectory,
