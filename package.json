@@ -2,7 +2,7 @@
   "name": "git-worktree",
   "displayName": "Git Worktree",
   "description": "Manage git worktrees with ease",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "publisher": "philstainer",
   "homepage": "https://github.com/philstainer/git-worktree/blob/main/README.md",
   "bugs": {
