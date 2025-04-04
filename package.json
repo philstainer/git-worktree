@@ -286,7 +286,7 @@
     "watch": "pnpm run esbuild-base --sourcemap --watch",
     "test-compile": "tsc -p ./",
     "prepare": "husky install",
-    "deploy": "vsce publish"
+    "deploy": "vsce publish --no-dependencies"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
