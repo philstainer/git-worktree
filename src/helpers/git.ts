@@ -3,6 +3,7 @@ import {
   BARE_REPOSITORY,
   BARE_REPOSITORY_REMOTE_ORIGIN_FETCH,
 } from '../config/constants';
+import settings from '../config/settings';
 import { executeCommand } from './general';
 import { removeNewLine } from './string';
 import { getWorktrees } from './worktree/getWorktrees';
@@ -151,7 +152,8 @@ export const getRemoteBranches = async (): Promise<string[]> => {
 
 export const pushNewBranchToRemote = async ({ path, worktree }: IWorktree) => {
   try {
-    const command = `git -C ${path} push --set-upstream origin ${worktree}`;
+    const skipHooksFlag = settings.shouldSkipGitHooks ? '--no-verify' : '';
+    const command = `git -C ${path} push ${skipHooksFlag} --set-upstream origin ${worktree}`;
     await executeCommand(command);
   } catch (e: any) {
     throw Error(e);
