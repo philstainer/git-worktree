@@ -1,13 +1,11 @@
 import { executeCommand } from '#/helpers/general';
-import { BARE_REPOSITORY } from '#/src/config/constants';
 import { getCurrentBranchName, isInsideBareRepository } from '../git';
-import { removeFirstAndLastCharacter } from '../string';
 
 export const getWorktrees = async (
   withBareRepo = false,
   showCurrentWorktree = false
 ) => {
-  const command = 'git worktree list';
+  const command = 'git worktree list --porcelain';
 
   try {
     const { stdout } = await executeCommand(command);
@@ -34,15 +32,29 @@ const getFilteredWorktrees = async (
   const currentWorktree = await getCurrentBranchName();
 
   let splitWorktrees = stdout
-    .split('\n')
-    .filter((str) => str !== '')
-    .map((str) => {
-      const [path, hash, worktree] = str.split(' ').filter((str) => str !== '');
+    .trim()
+    .split('\n\n')
+    .map((path): { path: string; hash: string; worktree: string } => {
+      let worktree: string | null = null;
+      let commit: string | null = null;
+      let branch: string | null = null;
+
+      path.split('\n').forEach((line) => {
+        if (line.startsWith('worktree ')) {
+          worktree = line.slice(9);
+        } else if (line.startsWith('HEAD ')) {
+          commit = line.slice(5, 12); // Short commit hash
+        } else if (line.startsWith('branch refs/heads/')) {
+          branch = line.slice(18);
+        }
+      });
+
+      if (!worktree) throw new Error('Missing worktree!');
 
       return {
-        path,
-        hash: worktree ? hash : '',
-        worktree: removeFirstAndLastCharacter(worktree ? worktree : hash),
+        path: worktree ?? '',
+        hash: commit ?? '',
+        worktree: branch ?? commit ?? '',
       };
     });
 
@@ -52,8 +64,9 @@ const getFilteredWorktrees = async (
     );
 
   if (!includeBare)
+    // Filter out bare worktree and worktrees that are not in the bare directory e.g have been manually moved
     splitWorktrees = splitWorktrees.filter(
-      ({ worktree }) => worktree !== BARE_REPOSITORY
+      ({ path }) => !path.endsWith('.bare')
     );
 
   return splitWorktrees;
