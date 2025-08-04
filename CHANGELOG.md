@@ -1,3 +1,9 @@
+## [1.3.2](https://github.com/philstainer/git-worktree/compare/v1.3.1...v1.3.2) (2025-08-04)
+
+### Code Refactoring
+
+- **getWorktrees:** update command and improve worktree parsing ([ad48171](https://github.com/philstainer/git-worktree/commit/ad481714de5697af4aa46eeccf665505ec71da8a))
+
 ## [1.3.1](https://github.com/philstainer/git-worktree/compare/v1.3.0...v1.3.1) (2025-04-04)
 
 ### Continuous Integration
