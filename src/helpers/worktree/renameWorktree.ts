@@ -7,10 +7,10 @@ export const renameWorktree = async (
 ) => {
   const newPath = path.slice().replace(`/${worktree}`, `/${newBranchName}`);
 
-  const moveWorktree = `git worktree move ${path} ${newPath}`;
+  const moveWorktree = `git worktree move "${path}" "${newPath}"`;
   await executeCommand(moveWorktree);
 
-  const renameBranch = `git -C ${newPath} branch -m ${newBranchName}`;
+  const renameBranch = `git -C "${newPath}" branch -m ${newBranchName}`;
   await executeCommand(renameBranch);
 
   return {
