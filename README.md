@@ -143,7 +143,7 @@ Should vscode open when worktree has been renamed
 
 ### Remove Settings
 
-Should rename branch when removing a worktree
+Should remove branch when removing a worktree
 
 - `gitWorktree.worktree.removeBranch`: False
 
@@ -153,6 +153,4 @@ Remove worktree command should allow multiple select
 
 ## Release Notes
 
-### 1.0.0
-
-Initial release
+See changes here: [CHANGELOG.md](CHANGELOG.md) for release notes.
