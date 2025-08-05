@@ -7,7 +7,7 @@ const untrackedOrModifiedFilesError =
   'contains modified or untracked files, use --force to delete it';
 
 export const removeWorktree = async ({ worktree, path }: IWorktree) => {
-  const command = `git worktree remove ${path}`;
+  const command = `git worktree remove "${path}"`;
 
   try {
     await executeCommand(command);
@@ -30,7 +30,7 @@ export const removeWorktree = async ({ worktree, path }: IWorktree) => {
 
     if (answer !== buttonName) return;
 
-    const forceCommand = `git worktree remove -f ${worktree}`;
+    const forceCommand = `git worktree remove -f "${worktree}"`;
     try {
       await executeCommand(forceCommand);
       showUserMessage(

@@ -15,7 +15,7 @@ export const addNewWorktree = async (
   const newWorktree = { worktree: newBranch, path: newWorktreePath };
 
   try {
-    const addCommand = `git worktree add --track -B ${newBranch} ${newWorktreePath} origin/${trackingBranch}`;
+    const addCommand = `git worktree add --track -B ${newBranch} "${newWorktreePath}" origin/${trackingBranch}`;
 
     await executeCommand(addCommand);
 

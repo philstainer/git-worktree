@@ -61,7 +61,7 @@ const hasBareRepository = async () => {
 };
 
 export const setUpBareRepositoryFetch = async (path?: string) => {
-  const pathCommand = path ? `-C ${path}` : '';
+  const pathCommand = path ? `-C "${path}"` : '';
   const fetchOriginCommand = `git ${pathCommand} config remote.origin.fetch "${BARE_REPOSITORY_REMOTE_ORIGIN_FETCH}"`;
 
   try {
@@ -84,7 +84,7 @@ export const setUpBareRepositoryFetch = async (path?: string) => {
 };
 
 export const fetch = async (path?: string) => {
-  const pathCommand = path ? `-C ${path}` : '';
+  const pathCommand = path ? `-C "${path}"` : '';
   const hasBareRepo = await hasBareRepository();
   if (hasBareRepo) await setUpBareRepositoryFetch(path);
 
@@ -153,7 +153,7 @@ export const getRemoteBranches = async (): Promise<string[]> => {
 export const pushNewBranchToRemote = async ({ path, worktree }: IWorktree) => {
   try {
     const skipHooksFlag = settings.shouldSkipGitHooks ? '--no-verify' : '';
-    const command = `git -C ${path} push ${skipHooksFlag} --set-upstream origin ${worktree}`;
+    const command = `git -C "${path}" push ${skipHooksFlag} --set-upstream origin ${worktree}`;
     await executeCommand(command);
   } catch (e: any) {
     throw Error(e);
@@ -179,7 +179,7 @@ export const cloneBare = async (
   baseDirectory: string = './.bare'
 ) => {
   try {
-    const command = `git -C ${path} clone --bare "${url}" ${baseDirectory}`;
+    const command = `git -C "${path}" clone --bare "${url}" ${baseDirectory}`;
     await executeCommand(command);
   } catch (e: any) {
     throw Error(e);
