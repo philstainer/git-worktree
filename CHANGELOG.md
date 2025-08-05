@@ -1,3 +1,13 @@
+## [1.3.3](https://github.com/philstainer/git-worktree/compare/v1.3.2...v1.3.3) (2025-08-05)
+
+### Bug Fixes
+
+- quote paths in git commands to allow spaces ([a71daa7](https://github.com/philstainer/git-worktree/commit/a71daa7ea31467b765ad13daa065e069b6731a34))
+
+### Documentation
+
+- update README for clarity on branch removal ([934b6f0](https://github.com/philstainer/git-worktree/commit/934b6f0dad83aec7b115faf8db7c85e65159b6ca)), closes [#18](https://github.com/philstainer/git-worktree/issues/18)
+
 ## [1.3.2](https://github.com/philstainer/git-worktree/compare/v1.3.1...v1.3.2) (2025-08-04)
 
 ### Code Refactoring
