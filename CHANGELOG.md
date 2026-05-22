@@ -1,3 +1,9 @@
+## [1.3.4](https://github.com/philstainer/git-worktree/compare/v1.3.3...v1.3.4) (2026-05-22)
+
+### Bug Fixes
+
+- enhance removeWorktree error handling with submodules ([34d24b3](https://github.com/philstainer/git-worktree/commit/34d24b3503609de307dd5abb67f8b566f3d20b84))
+
 ## [1.3.3](https://github.com/philstainer/git-worktree/compare/v1.3.2...v1.3.3) (2025-08-05)
 
 ### Bug Fixes
