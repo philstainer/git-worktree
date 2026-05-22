@@ -295,7 +295,7 @@
     "@types/git-url-parse": "^9.0.1",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.0",
-    "@types/node": "16.x",
+    "@types/node": "~22.19.19",
     "@types/vscode": "^1.72.0",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",

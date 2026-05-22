@@ -5,6 +5,8 @@ import { showUserMessage } from '../vscode';
 
 const untrackedOrModifiedFilesError =
   'contains modified or untracked files, use --force to delete it';
+const submodulesInWorktreeError =
+  'working trees containing submodules cannot be moved or removed';
 
 export const removeWorktree = async ({ worktree, path }: IWorktree) => {
   const command = `git worktree remove "${path}"`;
@@ -18,27 +20,46 @@ export const removeWorktree = async ({ worktree, path }: IWorktree) => {
   } catch (e: any) {
     const errorMessage = e.message;
 
-    if (!errorMessage.includes(untrackedOrModifiedFilesError))
-      throw new Error(e);
-
-    const buttonName = 'Force Delete';
-    const answer = await showUserMessage(
-      'Info',
-      `${APP_NAME}: ${errorMessage}`,
-      buttonName
-    );
-
-    if (answer !== buttonName) return;
-
     const forceCommand = `git worktree remove -f "${worktree}"`;
-    try {
-      await executeCommand(forceCommand);
-      showUserMessage(
+
+    if (errorMessage.includes(untrackedOrModifiedFilesError)) {
+      const buttonName = 'Force Delete';
+      const answer = await showUserMessage(
         'Info',
-        `Worktree named '${worktree}' was removed successfully`
+        `${APP_NAME}: ${errorMessage}`,
+        buttonName
       );
-    } catch (err: any) {
-      throw Error(err);
+
+      if (answer !== buttonName) return;
+
+      try {
+        await executeCommand(forceCommand);
+        showUserMessage(
+          'Info',
+          `Worktree named '${worktree}' was removed successfully`
+        );
+        return;
+      } catch (err: any) {
+        throw Error(err);
+      }
     }
+
+    if (errorMessage.includes(submodulesInWorktreeError)) {
+      const deinitSubmodulesCommand = `git -C "${path}" submodule deinit -f --all`;
+
+      try {
+        await executeCommand(deinitSubmodulesCommand, { cwd: path });
+        await executeCommand(forceCommand);
+        showUserMessage(
+          'Info',
+          `Worktree named '${worktree}' was removed successfully`
+        );
+        return;
+      } catch (err: any) {
+        throw Error(err);
+      }
+    }
+
+    throw new Error(e);
   }
 };
