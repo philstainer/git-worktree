@@ -1,3 +1,13 @@
+## [1.3.5](https://github.com/philstainer/git-worktree/compare/v1.3.4...v1.3.5) (2026-06-02)
+
+### Bug Fixes
+
+- set GIT_DIR environment variable for isInsideBareRepository function ([a143c23](https://github.com/philstainer/git-worktree/commit/a143c23c2af90b771dcc912308ee7515050edb99))
+
+### Miscellaneous Chores
+
+- trigger release for 1.3.4 ([b19ce3c](https://github.com/philstainer/git-worktree/commit/b19ce3cc1330a1cb4cb53fb4b726efae157cbbdf))
+
 ## [1.3.4](https://github.com/philstainer/git-worktree/compare/v1.3.3...v1.3.4) (2026-05-22)
 
 ### Bug Fixes
