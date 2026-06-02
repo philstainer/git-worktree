@@ -35,7 +35,11 @@ export const isInsideWorkTree = async () => {
 export const isInsideBareRepository = async (path?: string) => {
   try {
     const command = `git rev-parse --is-bare-repository`;
-    const { stdout } = await executeCommand(command, { cwd: path });
+    const { stdout } = await executeCommand(command, {
+      cwd: path,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      env: { ...process.env, GIT_DIR: path },
+    });
 
     const result = removeNewLine(stdout);
 
